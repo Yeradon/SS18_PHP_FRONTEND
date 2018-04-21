@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "public": "dist",
+    "public": "dist/ss18-php-frontend",
     "ignore": [
       "firebase.json",
       "**/.*",
