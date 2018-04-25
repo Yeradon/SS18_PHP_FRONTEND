@@ -1,6 +1,6 @@
 language: node_js
 node_js:
-- node
+- "9"
 script:
 - ng build --prod --aot --build-optimizer
 before_deploy:
