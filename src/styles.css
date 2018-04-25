@@ -1,1 +1,57 @@
 /* You can add global styles to this file, and also import other style files */
+body {
+  width: 100%;
+  height: auto;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Verdana, Helvetica, sans-serif;
+}
+
+p {
+
+}
+
+h1, h2, h3, h4, h5 {
+
+}
+
+a {
+
+}
+
+header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  height: auto;
+  background-color: #2E4172;
+}
+
+main {
+  box-sizing: border-box;
+}
+
+footer {
+
+}
+
+nav {
+
+}
+
+section {
+  width: 100%;
+  padding: 5px;
+  box-sizing: border-box;
+}
+
+.red {
+  color: #A8383B !important;
+}
+
+.blue {
+  color: #2E4172 !important;
+}

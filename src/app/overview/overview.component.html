@@ -1,0 +1,50 @@
+<section>
+  <div class="task-label">
+    <img src="assets/img/ic_schedule_red_48px.svg" height="20px" />
+    <label class="red">DRINGEND</label>
+  </div>
+  <div class="task">
+    <div class="task-info" [class.task-translated]="isTranslated">
+      <img class="checkbox" src="{{getCheckboxImg()}}" (click)="toggleCheckbox()" />
+      <span class="task-title">Blumen giessen</span>
+      <span class="task-scheduling red">JETZT</span>
+      <img class="btn options" src="assets/img/ic_more_vert_white_48px.svg" height="30px" (click)="onTranslate()"/>
+    </div>
+    <div class="task-options">
+      <img class="btn delete" src="assets/img/ic_delete_forever_white_48px.svg" height="30px" />
+      <img class="btn schedule" src="assets/img/ic_schedule_white_48px.svg" height="30px" />
+      <img class="btn de-schedule" src="assets/img/ic_restore_white_48px.svg" height="30px" />
+    </div>
+  </div>
+  <!-- AB HIER NUR DUMMIES -->
+  <div class="task-label">
+    <img src="assets/img/ic_date_range_white_48px.svg" height="20px" />
+    <label class="blue">EINGEPLANT</label>
+  </div>
+  <div class="task">
+    <div class="task-info">
+      <img src="assets/img/ic_check_box_white_24px.svg" />
+      <span class="task-title">Blumen giessen</span>
+      <span class="task-scheduling">MORGEN</span>
+      <img src="assets/img/ic_more_vert_white_48px.svg" height="30px" />
+    </div>
+    <div class="task-options">
+
+    </div>
+  </div>
+  <div class="task-label">
+    <img src="assets/img/ic_list_white_48px.svg" height="20px" />
+    <label class="">ALLE AUFGABEN</label>
+  </div>
+  <div class="task">
+    <div class="task-info">
+      <img src="assets/img/ic_check_box_white_24px.svg" />
+      <span class="task-title">Blumen giessen</span>
+      <span class="task-scheduling"></span>
+      <img src="assets/img/ic_more_vert_white_48px.svg" height="30px" />
+    </div>
+    <div class="task-options">
+
+    </div>
+  </div>
+</section>

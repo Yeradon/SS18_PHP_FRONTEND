@@ -1,0 +1,100 @@
+.task {
+  position: relative;
+  width: 100%;
+  min-height: 50px;
+  margin: 0;
+  padding: 0;
+}
+
+.task-info {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 99;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  min-height: 50px;
+  padding: 0 5px;
+  box-sizing: border-box;
+  background-color: white;
+  box-sizing: border-box;
+  border-top: 1px solid #bababa;
+  border-bottom: 1px solid #bababa;
+  transition: .2s ease;
+}
+
+.task-options {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 0;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+    width: 100%;
+    min-height: 50px;
+    box-sizing: border-box;
+    background-color: #bababa;
+}
+
+.task-title {
+  width: 50%;
+  box-sizing: border-box;
+}
+
+.task-scheduling {
+  width: 20%;
+  box-sizing: border-box;
+  font-size: 75%;
+  color: #bababa;
+}
+
+.task-label {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin: 5px;
+  padding: 5px 10px;
+  box-sizing: border-box;
+}
+
+.task-label label {
+  font-size: 75%;
+  color: #bababa;
+  padding-left: 10px;
+}
+
+.task-translated {
+  transform: translateX(-150px);
+}
+
+.btn, .checkbox {
+  cursor: pointer;
+}
+
+.options {
+  border-radius: 30px;
+  transition: .1s;
+}
+
+.options:hover {
+  background-color: #eaeaea;
+}
+
+.delete, .schedule, .de-schedule {
+  padding: 10px;
+}
+
+.delete:hover {
+  background-color: #A8383B;
+}
+
+.schedule:hover, .de-schedule:hover {
+  background-color: #2E4172;
+}
