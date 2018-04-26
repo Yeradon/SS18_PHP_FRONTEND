@@ -5,8 +5,14 @@
   </div>
   <div class="task">
     <div class="task-info" [class.task-translated]="isTranslated">
-      <img class="checkbox" src="{{getCheckboxImg()}}" (click)="toggleCheckbox()" />
-      <span class="task-title">Blumen giessen</span>
+      <span class="task-checkbox">
+        <input type="checkbox" />
+        <img class="checkbox checked" src="assets/img/ic_check_box_white_24px.svg" height="30px"/>
+        <img class="checkbox unchecked" src="assets/img/ic_check_box_outline_blank_white_24px.svg" height="30px"/>
+      </span>
+      <span class="task-title">
+        <input type="text" value="Blumen giessen" />
+      </span>
       <span class="task-scheduling red">JETZT</span>
       <img class="btn options" src="assets/img/ic_more_vert_white_48px.svg" height="30px" (click)="onTranslate()"/>
     </div>

@@ -10,7 +10,7 @@
   position: absolute;
   top: 0;
   left: 0;
-  z-index: 99;
+  z-index: 1;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -46,6 +46,26 @@
   box-sizing: border-box;
 }
 
+.task-title input {
+  font: Verdana, Helvetica, sans-serif;
+  font-size: 100%;
+  padding: 5px;
+  margin: 0;
+  border-radius: 0;
+  border: 1px solid #ffffff;
+  transition: .3s;
+}
+
+.task-title input:hover {
+  border-bottom: 1px solid #bababa;
+}
+
+.task-title input:focus {
+  border-bottom: 1px solid #bababa;
+  background-color: #eaeaea;
+  box-shadow: none;
+}
+
 .task-scheduling {
   width: 20%;
   box-sizing: border-box;
@@ -65,22 +85,64 @@
 }
 
 .task-label label {
-  font-size: 75%;
-  color: #bababa;
   padding-left: 10px;
+}
+
+.task-checkbox {
+  position: relative;
+  height: 30px;
+  width: 30px;
+}
+
+.task-checkbox input {
+  position: absolute;
+  height: 30px;
+  width: 30px;
+  opacity: 0;
+  cursor: pointer;
+  z-index: 2;
+}
+
+.task-checkbox .checkbox {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: white;
+}
+
+.task-checkbox .checked, .task-checkbox .unchecked {
+  display: none;
+  border-radius: 5px;
+  transition: .3s;
+}
+
+.task-checkbox input:checked ~ .checked {
+  display: block;
+}
+
+.task-checkbox .unchecked {
+  display: block;
+}
+
+.task-checkbox input:checked ~ .unchecked {
+  display: none;
+}
+
+.task-checkbox input:focus ~ .unchecked, .task-checkbox input:focus ~ .checked {
+  background-color: #eaeaea;
 }
 
 .task-translated {
   transform: translateX(-150px);
 }
 
-.btn, .checkbox {
+.btn {
   cursor: pointer;
 }
 
 .options {
   border-radius: 30px;
-  transition: .1s;
+  transition: .3s;
 }
 
 .options:hover {
