@@ -90,12 +90,12 @@ input[type="button"], input[type="submit"], input[type="reset"] {
 
 input[type="submit"] {
   color: white;
-  background-color: #2E4172;
-  border: 1px solid #061539;
+  background-color: #2E4172 !important;
+  border: 1px solid #061539 !important;
 }
 
 input[type="submit"]:hover {
-  background-color: #162856;
+  background-color: #162856 !important;
 }
 
 .red {

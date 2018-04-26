@@ -1,0 +1,43 @@
+.msg {
+  visibility: hidden;
+  width: 90%;
+  height: auto;
+  position: fixed;
+  bottom: 30px;
+  left: 5%;
+  color: white;
+  background-color: #1a1a1a;
+  text-align: center;
+  border-radius: 5px;
+  padding: 10px;
+  margin: 0;
+  z-index: 99;
+  box-sizing: border-box;
+}
+
+.msg.show {
+  visibility: visible;
+  animation: fadein .5s, fadeout .5s 3s;
+}
+
+@keyframes fadein {
+  from {bottom: 0; opacity: 0;}
+  to {bottom: 30px; opacity: 1;}
+}
+
+@keyframes fadeout {
+  from {bottom: 30px; opacity: 1;}
+  to {bottom: 0; opacity: 0;}
+}
+
+.msg h1 {
+  text-align: left;
+  margin: 0;
+  padding: 0;
+  font-size: 80%;
+}
+
+.msg p {
+  margin: 10px;
+  padding: 0;
+}
