@@ -2,7 +2,15 @@
   background-color: #061539;
 }
 
-.nav-visible {
+.nav-visible { /* ändert die Größe des Menüs, sodass es sichtbar wird */
   min-width: 100%;
   max-width: 100%;
 }
+ @media (min-width: 1300px) {
+
+   .nav-visible {
+     min-width: 15%;
+     max-width: 15%;
+   }
+
+ }

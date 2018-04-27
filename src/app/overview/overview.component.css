@@ -1,4 +1,7 @@
-.task {
+/*
+ * Klassen zur Darstellung von Aufgaben
+ */
+.task { /* Container zur Darstellung einer kompletten Aufgabe */
   position: relative;
   width: 100%;
   min-height: 50px;
@@ -6,7 +9,7 @@
   padding: 0;
 }
 
-.task-info {
+.task-info { /* Container zur Darstellung von Aufgabeninformationen; Teil von .task */
   position: absolute;
   top: 0;
   left: 0;
@@ -26,7 +29,7 @@
   transition: .2s ease;
 }
 
-.task-options {
+.task-options { /* Container zur Darstellung der Aufgabenoptionen; Teil von .task; standardmäßig unsichtbar */
     position: absolute;
     top: 0;
     left: 0;
@@ -41,12 +44,14 @@
     background-color: #bababa;
 }
 
-.task-title {
+.task-title { /* Container zur Darstellung eines Aufgabentitels; Teil von .task-info */
   width: 50%;
   box-sizing: border-box;
+  padding: 0 10px;
 }
 
 .task-title input {
+  width: 100%;
   font: Verdana, Helvetica, sans-serif;
   font-size: 100%;
   padding: 5px;
@@ -66,14 +71,14 @@
   box-shadow: none;
 }
 
-.task-scheduling {
+.task-scheduling { /* Container zur Darstellung einer Terminierung; Teil von .task-info */
   width: 20%;
   box-sizing: border-box;
   font-size: 75%;
   color: #bababa;
 }
 
-.task-label {
+.task-label { /* Container zur Darstellung eines Abschnittsüberschrift */
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -88,7 +93,7 @@
   padding-left: 10px;
 }
 
-.task-checkbox {
+.task-checkbox { /* Container zur Darstellung der Checkbox; Teil von .task-info */
   position: relative;
   height: 30px;
   width: 30px;
@@ -110,7 +115,7 @@
   background-color: white;
 }
 
-.task-checkbox .checked, .task-checkbox .unchecked {
+.task-checkbox .checked, .task-checkbox .unchecked { /* Container zur Darstellung einer eigenen Checkbox-Grafik; Teil von .task-checkbox */
   display: none;
   border-radius: 5px;
   transition: .3s;
@@ -132,15 +137,11 @@
   background-color: #eaeaea;
 }
 
-.task-translated {
+.task-translated { /* Klasse verschiebt eine Aufgabeninfo nach links, damit Aufgabenoptionen sichtbar werden */
   transform: translateX(-150px);
 }
 
-.btn {
-  cursor: pointer;
-}
-
-.options {
+.options { /* Container zur Darstellung des Optionen-Buttons in .task-info */
   border-radius: 30px;
   transition: .3s;
 }
@@ -149,14 +150,59 @@
   background-color: #eaeaea;
 }
 
-.delete, .schedule, .de-schedule {
+.delete, .schedule, .de-schedule { /* Container zur Darstellung der Button in .task-options */
   padding: 10px;
 }
 
-.delete:hover {
+.delete:hover { /* Button mit roten Hintergrund */
   background-color: #A8383B;
 }
 
-.schedule:hover, .de-schedule:hover {
+.schedule:hover, .de-schedule:hover { /* Button mit blauem Hintergrund */
   background-color: #2E4172;
 }
+
+/*
+ * Abwandlungen globaler Klassen
+ */
+.clickable {
+  padding: 0;
+}
+
+/*
+ * DESKTOP-DARSTELLUNG: Klassen zur Darstellung von Aufgaben
+ */
+ @media (min-width: 1300px) {
+
+   .task-info {
+     width: 80%;
+   }
+
+   .task-options {
+     left: 80%;
+     width: 20%;
+     background-color: white;
+     border-top: 1px solid #bababa;
+     border-bottom: 1px solid #bababa;
+   }
+
+   .task-title {
+     width: 80%;
+   }
+
+   .task-scheduling {
+     text-align: right;
+   }
+
+   .options {
+     display: none;
+   }
+
+   .delete, .schedule, .de-schedule {
+     margin-right: 5px;
+     padding: 2.5px;
+     border-radius: 2px;
+     background-color: #bababa;
+   }
+
+ }

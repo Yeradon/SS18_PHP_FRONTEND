@@ -1,4 +1,8 @@
-/* You can add global styles to this file, and also import other style files */
+/* GLOBALE STYLESHEETS */
+
+/*
+ * HTML-Standardtags
+ */
 body {
   width: 100%;
   height: auto;
@@ -54,7 +58,6 @@ nav {
   box-sizing: border-box;
   overflow: hidden;
   transition: .3s;
-  z-index: 98;
 }
 
 section {
@@ -98,22 +101,37 @@ input[type="submit"]:hover {
   background-color: #162856 !important;
 }
 
-.red {
+/*
+ * Globable Klassen
+ */
+.red { /* rote Schrift */
   color: #A8383B !important;
 }
 
-.blue {
+.blue {  /* blaue Schrift */
   color: #2E4172 !important;
 }
 
-.clickable {
+.clickable { /* ändert den Mauszeiger */
   padding: 10px;
   cursor: pointer;
 }
 
-.flex {
+.flex { /* erzeugt eine Flexbox mit Richtung "row" */
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: flex-start;
 }
+
+/*
+ * DESKTOP-DARSTELLUNG: HTML-Standardtags
+ */
+ @media (min-width: 1300px) {
+
+   section {
+     width: 50%;
+     margin: auto;
+   }
+
+ }
