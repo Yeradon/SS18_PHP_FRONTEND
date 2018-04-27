@@ -47,7 +47,6 @@
 .task-title { /* Container zur Darstellung eines Aufgabentitels; Teil von .task-info */
   width: 50%;
   box-sizing: border-box;
-  padding: 0 10px;
 }
 
 .task-title input {
@@ -75,6 +74,7 @@
   width: 20%;
   box-sizing: border-box;
   font-size: 75%;
+  text-align: right;
   color: #bababa;
 }
 
@@ -84,7 +84,7 @@
   align-items: center;
   justify-content: center;
   width: 100%;
-  margin: 5px;
+  margin: 0;
   padding: 5px 10px;
   box-sizing: border-box;
 }
@@ -151,7 +151,7 @@
 }
 
 .delete, .schedule, .de-schedule { /* Container zur Darstellung der Button in .task-options */
-  padding: 10px;
+  padding: 10px !important;
 }
 
 .delete:hover { /* Button mit roten Hintergrund */
@@ -166,7 +166,7 @@
  * Abwandlungen globaler Klassen
  */
 .clickable {
-  padding: 0;
+  padding: 0px;
 }
 
 /*
@@ -188,10 +188,7 @@
 
    .task-title {
      width: 80%;
-   }
-
-   .task-scheduling {
-     text-align: right;
+     padding: 0 10px;
    }
 
    .options {
@@ -200,7 +197,7 @@
 
    .delete, .schedule, .de-schedule {
      margin-right: 5px;
-     padding: 2.5px;
+     padding: 2.5px !important;
      border-radius: 2px;
      background-color: #bababa;
    }

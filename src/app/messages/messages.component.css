@@ -41,3 +41,12 @@
   margin: 10px;
   padding: 0;
 }
+
+@media (min-width: 1300px) {
+
+  .msg {
+    left: 37.5%;
+    width: 25%;
+  }
+
+}
