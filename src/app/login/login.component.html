@@ -1,9 +1,9 @@
 <div class="container flex">
   <img src="assets/img/todo-logo.svg" height="100px"/>
   <div class="">
-    <input type="text" placeholder="Benutzername" required />
-    <input type="password" placeholder="Passwort" required />
-    <input type="submit" value="Anmelden" routerLink="/overview"/>
+      <input type="text"  [(ngModel)]="user" placeholder="Benutzername" required />
+      <input type="password" [(ngModel)]="password" placeholder="Passwort" required />
+      <input type="submit" value="Anmelden" (click)="login()" >
     <p>
       Noch kein Konto? <a href="">Registrieren</a>
     </p>
