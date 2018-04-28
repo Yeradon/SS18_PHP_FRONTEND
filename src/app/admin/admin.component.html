@@ -1,0 +1,34 @@
+<section>
+  <h1>Administrator-Bereich</h1>
+  <input type="text" name="user" placeholder="Nach Benutzern suchen..." />
+  <div class="flex">
+    <label class="blue">ADMINISTRATOREN</label>
+  </div>
+  <div class="translateable">
+    <div class="translateable-info" [class.translated]="isTranslated">
+      <img class="user-img" src="assets/img/ic_person_grey_48px.svg" height="30px" />
+      <span class="user-username">admin</span>
+      <span class="user-fullname">Administrator</span>
+      <img class="clickable options" src="assets/img/ic_more_vert_white_48px.svg" height="30px" (click)="onTranslate()"/>
+    </div>
+    <div class="translateable-options">
+      <img class="clickable delete" src="assets/img/ic_delete_forever_white_48px.svg" height="30px" />
+      <img class="clickable change-role" src="assets/img/ic_person_outline_white_48px.svg" height="30px" />
+    </div>
+  </div>
+  <div class="flex">
+    <label class="blue">BENUTZER</label>
+  </div>
+  <div class="translateable">
+    <div class="translateable-info" [class.translated]="isTranslated">
+      <img class="user-img" src="assets/img/ic_person_outline_grey_48px.svg" height="30px" />
+      <span class="user-username">mmustermann</span>
+      <span class="user-fullname">Max Mustermann</span>
+      <img class="clickable options" src="assets/img/ic_more_vert_white_48px.svg" height="30px" (click)="onTranslate()"/>
+    </div>
+    <div class="translateable-options">
+      <img class="clickable delete" src="assets/img/ic_delete_forever_white_48px.svg" height="30px" />
+      <img class="clickable change-role" src="assets/img/ic_person_white_48px.svg" height="30px" />
+    </div>
+  </div>
+</section>

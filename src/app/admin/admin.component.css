@@ -1,0 +1,62 @@
+/*
+ * Klassen zur Darstellung des Admin-Bereichs
+ */
+.user-img {
+  width: 10%;
+}
+
+.user-username {
+  width: 80%;
+  padding: 10px;
+}
+
+.user-fullname {
+  display: none;
+}
+
+.delete:hover { /* Button mit roten Hintergrund */
+  background-color: #A8383B;
+}
+
+.change-role:hover {
+  background-color: #2E4172;
+}
+
+/*
+ * Abwandlung globaler Klassen
+ */
+ label {
+   padding: 10px;
+ }
+
+ .flex {
+   justify-content: center;
+ }
+
+ .translated {
+   transform: translateX(-100px);
+ }
+
+/*
+ * DESKTOP-DARSTELLUNG: Klassen zur Darstellung des Admin-Bereichs
+ */
+@media (min-width: 1300px) {
+
+  .user-username, .user-fullname {
+    width: 45%;
+    padding: 10px;
+    display: block;
+  }
+
+  /*
+   * DESKTOP-DARSTELLUNG: Abwandlungen globaler Klassen
+   */
+
+  .clickable {
+      margin-right: 5px;
+      padding: 2.5px !important;
+      border-radius: 2px;
+      background-color: #bababa;
+  }
+
+}

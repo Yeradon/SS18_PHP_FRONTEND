@@ -8,6 +8,8 @@ import { MenuComponent } from './menu/menu.component';
 import { AccountComponent } from './account/account.component';
 import { MessagesComponent } from './messages/messages.component';
 import { LoginComponent } from './login/login.component';
+import { AdminComponent } from './admin/admin.component';
+import { SchedulePopupComponent } from './schedule-popup/schedule-popup.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +18,9 @@ import { LoginComponent } from './login/login.component';
     MenuComponent,
     AccountComponent,
     MessagesComponent,
-    LoginComponent
+    LoginComponent,
+    AdminComponent,
+    SchedulePopupComponent
   ],
   imports: [
     BrowserModule,

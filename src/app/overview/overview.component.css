@@ -1,48 +1,6 @@
 /*
  * Klassen zur Darstellung von Aufgaben
  */
-.task { /* Container zur Darstellung einer kompletten Aufgabe */
-  position: relative;
-  width: 100%;
-  min-height: 50px;
-  margin: 0;
-  padding: 0;
-}
-
-.task-info { /* Container zur Darstellung von Aufgabeninformationen; Teil von .task */
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 1;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  min-height: 50px;
-  padding: 0 5px;
-  box-sizing: border-box;
-  background-color: white;
-  box-sizing: border-box;
-  border-top: 1px solid #bababa;
-  border-bottom: 1px solid #bababa;
-  transition: .2s ease;
-}
-
-.task-options { /* Container zur Darstellung der Aufgabenoptionen; Teil von .task; standardmäßig unsichtbar */
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 0;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: flex-end;
-    width: 100%;
-    min-height: 50px;
-    box-sizing: border-box;
-    background-color: #bababa;
-}
 
 .task-title { /* Container zur Darstellung eines Aufgabentitels; Teil von .task-info */
   width: 50%;
@@ -137,19 +95,6 @@
   background-color: #eaeaea;
 }
 
-.task-translated { /* Klasse verschiebt eine Aufgabeninfo nach links, damit Aufgabenoptionen sichtbar werden */
-  transform: translateX(-150px);
-}
-
-.options { /* Container zur Darstellung des Optionen-Buttons in .task-info */
-  border-radius: 30px;
-  transition: .3s;
-}
-
-.options:hover {
-  background-color: #eaeaea;
-}
-
 .delete, .schedule, .de-schedule { /* Container zur Darstellung der Button in .task-options */
   padding: 10px !important;
 }
@@ -174,25 +119,9 @@
  */
  @media (min-width: 1300px) {
 
-   .task-info {
-     width: 80%;
-   }
-
-   .task-options {
-     left: 80%;
-     width: 20%;
-     background-color: white;
-     border-top: 1px solid #bababa;
-     border-bottom: 1px solid #bababa;
-   }
-
    .task-title {
      width: 80%;
      padding: 0 10px;
-   }
-
-   .options {
-     display: none;
    }
 
    .delete, .schedule, .de-schedule {

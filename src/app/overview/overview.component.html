@@ -1,10 +1,11 @@
 <section>
+  <h1>Meine Übersicht</h1>
   <div class="task-label">
     <img src="assets/img/ic_schedule_red_48px.svg" height="20px" />
     <label class="red">DRINGEND</label>
   </div>
-  <div class="task">
-    <div class="task-info" [class.task-translated]="isTranslated">
+  <div class="translateable">
+    <div class="translateable-info" [class.translated]="isTranslated">
       <span class="task-checkbox">
         <input type="checkbox" />
         <img class="checkbox checked" src="assets/img/ic_check_box_white_24px.svg" height="30px"/>
@@ -16,7 +17,7 @@
       <span class="task-scheduling red">JETZT</span>
       <img class="clickable options" src="assets/img/ic_more_vert_white_48px.svg" height="30px" (click)="onTranslate()"/>
     </div>
-    <div class="task-options">
+    <div class="translateable-options">
       <img class="clickable delete" src="assets/img/ic_delete_forever_white_48px.svg" height="30px" />
       <img class="clickable schedule" src="assets/img/ic_schedule_white_48px.svg" height="30px" />
       <img class="clickable de-schedule" src="assets/img/ic_restore_white_48px.svg" height="30px" />
@@ -27,30 +28,47 @@
     <img src="assets/img/ic_date_range_white_48px.svg" height="20px" />
     <label class="blue">EINGEPLANT</label>
   </div>
-  <div class="task">
-    <div class="task-info">
-      <img src="assets/img/ic_check_box_white_24px.svg" />
-      <span class="task-title">Blumen giessen</span>
+  <div class="translateable">
+    <div class="translateable-info" [class.translated]="isTranslated">
+      <span class="task-checkbox">
+        <input type="checkbox" />
+        <img class="checkbox checked" src="assets/img/ic_check_box_white_24px.svg" height="30px"/>
+        <img class="checkbox unchecked" src="assets/img/ic_check_box_outline_blank_white_24px.svg" height="30px"/>
+      </span>
+      <span class="task-title">
+        <input type="text" value="Blumen giessen" />
+      </span>
       <span class="task-scheduling">MORGEN</span>
-      <img src="assets/img/ic_more_vert_white_48px.svg" height="30px" />
+      <img class="clickable options" src="assets/img/ic_more_vert_white_48px.svg" height="30px" (click)="onTranslate()"/>
     </div>
-    <div class="task-options">
-
+    <div class="translateable-options">
+      <img class="clickable delete" src="assets/img/ic_delete_forever_white_48px.svg" height="30px" />
+      <img class="clickable schedule" src="assets/img/ic_schedule_white_48px.svg" height="30px" />
+      <img class="clickable de-schedule" src="assets/img/ic_restore_white_48px.svg" height="30px" />
     </div>
   </div>
   <div class="task-label">
     <img src="assets/img/ic_list_white_48px.svg" height="20px" />
     <label class="">ALLE AUFGABEN</label>
   </div>
-  <div class="task">
-    <div class="task-info">
-      <img src="assets/img/ic_check_box_white_24px.svg" />
-      <span class="task-title">Blumen giessen</span>
+  <div class="translateable">
+    <div class="translateable-info" [class.translated]="isTranslated">
+      <span class="task-checkbox">
+        <input type="checkbox" />
+        <img class="checkbox checked" src="assets/img/ic_check_box_white_24px.svg" height="30px"/>
+        <img class="checkbox unchecked" src="assets/img/ic_check_box_outline_blank_white_24px.svg" height="30px"/>
+      </span>
+      <span class="task-title">
+        <input type="text" value="Blumen giessen" />
+      </span>
       <span class="task-scheduling"></span>
-      <img src="assets/img/ic_more_vert_white_48px.svg" height="30px" />
+      <img class="clickable options" src="assets/img/ic_more_vert_white_48px.svg" height="30px" (click)="onTranslate()"/>
     </div>
-    <div class="task-options">
-
+    <div class="translateable-options">
+      <img class="clickable delete" src="assets/img/ic_delete_forever_white_48px.svg" height="30px" />
+      <img class="clickable schedule" src="assets/img/ic_schedule_white_48px.svg" height="30px" />
+      <img class="clickable de-schedule" src="assets/img/ic_restore_white_48px.svg" height="30px" />
     </div>
   </div>
 </section>
+<app-schedule-popup></app-schedule-popup>

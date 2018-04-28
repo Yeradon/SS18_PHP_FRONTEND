@@ -125,6 +125,63 @@ input[type="submit"]:hover {
     justify-content: flex-start;
 }
 
+.translateable { /* Container zur Darstellung von Informationen und untergeorndeten Optionen */
+  position: relative;
+  width: 100%;
+  min-height: 50px;
+  margin: 0;
+  padding: 0;
+}
+
+.translateable-info { /* Container zur Darstellung von Informationen; Teil von .translateable */
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  min-height: 50px;
+  padding: 0 5px;
+  box-sizing: border-box;
+  background-color: white;
+  box-sizing: border-box;
+  border-top: 1px solid #bababa;
+  border-bottom: 1px solid #bababa;
+  transition: .2s ease;
+}
+
+.translateable-options { /* Container zur Darstellung der Optionen; Teil von .translateable; standardmäßig unsichtbar */
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 0;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+    width: 100%;
+    min-height: 50px;
+    box-sizing: border-box;
+    background-color: #bababa;
+}
+
+.translated { /* Klasse verschiebt ein .translateable nach links, damit Optionen sichtbar werden */
+  transform: translateX(-150px);
+}
+
+.options { /* Container zur Darstellung des Optionen-Buttons in .translateable-info */
+  border-radius: 30px;
+  transition: .3s;
+  padding: 0px !important;
+}
+
+.options:hover {
+  background-color: #eaeaea;
+}
+
 /*
  * DESKTOP-DARSTELLUNG: HTML-Standardtags
  */
@@ -133,6 +190,22 @@ input[type="submit"]:hover {
    section {
      width: 50%;
      margin: auto;
+   }
+
+   .translateable-info {
+     width: 80%;
+   }
+
+   .translateable-options {
+     left: 80%;
+     width: 20%;
+     background-color: white;
+     border-top: 1px solid #bababa;
+     border-bottom: 1px solid #bababa;
+   }
+
+   .options {
+     display: none;
    }
 
  }
