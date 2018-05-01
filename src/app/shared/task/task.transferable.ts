@@ -1,7 +1,7 @@
 export class TaskTransferable {
-  id: string;
-  text: string;
-  done: boolean;
-  deadline: Date;
-  userID: string;
+  public id: string;
+  public text: string;
+  public done: boolean;
+  public deadline: Date;
+  public userID: string;
 }
