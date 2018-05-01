@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { TaskDisplayable } from '../shared/task/task.displayable';
 
 @Component({
   selector: 'app-schedule-popup',
@@ -14,6 +15,8 @@ export class SchedulePopupComponent implements OnInit {
 
     this.noDisplay = false;
     this.task = task;
+
+    return null;
 
   }
 
