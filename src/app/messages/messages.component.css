@@ -17,7 +17,7 @@
 
 .msg.show {
   visibility: visible;
-  animation: fadein .5s, fadeout .5s 3s;
+  animation: fadein .5s;
 }
 
 @keyframes fadein {
@@ -40,6 +40,10 @@
 .msg p {
   margin: 10px;
   padding: 0;
+}
+
+.flex {
+  justify-content: space-between;
 }
 
 @media (min-width: 1300px) {

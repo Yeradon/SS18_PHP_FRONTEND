@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MessageService } from '../message.service';
 
 @Component({
   selector: 'app-admin',
@@ -9,11 +10,13 @@ export class AdminComponent implements OnInit {
 
   isTranslated = false;
 
+  constructor(
+    private messageService: MessageService
+  ) { }
+
   onTranslate(): void {
     this.isTranslated = !this.isTranslated;
   }
-
-  constructor() { }
 
   ngOnInit() {
   }

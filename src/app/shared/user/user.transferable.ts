@@ -1,4 +1,4 @@
-class UserTransferable {
+export class UserTransferable {
   id: string;
   name: string;
 }

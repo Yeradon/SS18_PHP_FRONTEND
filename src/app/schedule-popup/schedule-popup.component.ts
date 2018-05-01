@@ -7,6 +7,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SchedulePopupComponent implements OnInit {
 
+  task: TaskDisplayable;
+  noDisplay: boolean = true;
+
+  public scheduleTask(task: TaskDisplayable): TaskDisplayable {
+
+    this.noDisplay = false;
+    this.task = task;
+
+  }
+
   constructor() { }
 
   ngOnInit() {

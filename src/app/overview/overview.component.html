@@ -1,73 +1,75 @@
 <section>
   <h1>Meine Übersicht</h1>
-  <div class="task-label">
+  <!-- DARSTELLUNG DER LISTE tasks_urgent -->
+  <div class="task-label" *ngIf="tasks_urgent.length">
     <img src="assets/img/ic_schedule_red_48px.svg" height="20px" />
     <label class="red">DRINGEND</label>
   </div>
-  <div class="translateable">
-    <div class="translateable-info" [class.translated]="isTranslated">
+  <div class="translateable" *ngFor="let t of tasks_urgent">
+    <div class="translateable-info" [class.translated]="t.isTranslated">
       <span class="task-checkbox">
-        <input type="checkbox" />
+        <input type="checkbox" [(ngModel)]="t.done"/>
         <img class="checkbox checked" src="assets/img/ic_check_box_white_24px.svg" height="30px"/>
         <img class="checkbox unchecked" src="assets/img/ic_check_box_outline_blank_white_24px.svg" height="30px"/>
       </span>
       <span class="task-title">
-        <input type="text" value="Blumen giessen" />
+        <input type="text" [(ngModel)]="t.text"  />
       </span>
-      <span class="task-scheduling red">JETZT</span>
-      <img class="clickable options" src="assets/img/ic_more_vert_white_48px.svg" height="30px" (click)="onTranslate()"/>
+      <span class="task-scheduling red">{{t.generateDisplayableDeadline()}}</span>
+      <img class="clickable options" src="assets/img/ic_more_vert_white_48px.svg" height="30px" (click)="t.toggleTranslation()"/>
     </div>
     <div class="translateable-options">
-      <img class="clickable delete" src="assets/img/ic_delete_forever_white_48px.svg" height="30px" />
-      <img class="clickable schedule" src="assets/img/ic_schedule_white_48px.svg" height="30px" />
-      <img class="clickable de-schedule" src="assets/img/ic_restore_white_48px.svg" height="30px" />
+      <img class="clickable delete" src="assets/img/ic_delete_forever_white_48px.svg" height="30px" (click)="removeTask(t)" />
+      <img class="clickable schedule" src="assets/img/ic_schedule_white_48px.svg" height="30px" (click)="scheduleTask(t)" />
+      <img class="clickable de-schedule" src="assets/img/ic_restore_white_48px.svg" height="30px" (click)="descheduleTask(t)" />
     </div>
   </div>
-  <!-- AB HIER NUR DUMMIES -->
-  <div class="task-label">
+  <!-- DARSTELLUNG DER LISTE tasks_scheduled -->
+  <div class="task-label" *ngIf="tasks_scheduled.length">
     <img src="assets/img/ic_date_range_white_48px.svg" height="20px" />
     <label class="blue">EINGEPLANT</label>
   </div>
-  <div class="translateable">
-    <div class="translateable-info" [class.translated]="isTranslated">
+  <div class="translateable" *ngFor="let t of tasks_scheduled">
+    <div class="translateable-info" [class.translated]="t.isTranslated">
       <span class="task-checkbox">
-        <input type="checkbox" />
+        <input type="checkbox" [(ngModel)]="t.done"/>
         <img class="checkbox checked" src="assets/img/ic_check_box_white_24px.svg" height="30px"/>
         <img class="checkbox unchecked" src="assets/img/ic_check_box_outline_blank_white_24px.svg" height="30px"/>
       </span>
       <span class="task-title">
-        <input type="text" value="Blumen giessen" />
+        <input type="text" [(ngModel)]="t.text"  />
       </span>
-      <span class="task-scheduling">MORGEN</span>
-      <img class="clickable options" src="assets/img/ic_more_vert_white_48px.svg" height="30px" (click)="onTranslate()"/>
+      <span class="task-scheduling">{{t.generateDisplayableDeadline()}}</span>
+      <img class="clickable options" src="assets/img/ic_more_vert_white_48px.svg" height="30px" (click)="t.toggleTranslation()"/>
     </div>
     <div class="translateable-options">
-      <img class="clickable delete" src="assets/img/ic_delete_forever_white_48px.svg" height="30px" />
-      <img class="clickable schedule" src="assets/img/ic_schedule_white_48px.svg" height="30px" />
-      <img class="clickable de-schedule" src="assets/img/ic_restore_white_48px.svg" height="30px" />
+      <img class="clickable delete" src="assets/img/ic_delete_forever_white_48px.svg" height="30px" (click)="removeTask(t)" />
+      <img class="clickable schedule" src="assets/img/ic_schedule_white_48px.svg" height="30px" (click)="scheduleTask(t)" />
+      <img class="clickable de-schedule" src="assets/img/ic_restore_white_48px.svg" height="30px" (click)="descheduleTask(t)" />
     </div>
   </div>
+  <!-- DARSTELLUNG DER LISTE tasks_unscheduled -->
   <div class="task-label">
     <img src="assets/img/ic_list_white_48px.svg" height="20px" />
     <label class="">ALLE AUFGABEN</label>
   </div>
-  <div class="translateable">
-    <div class="translateable-info" [class.translated]="isTranslated">
+  <div class="translateable" *ngFor="let t of tasks_unscheduled">
+    <div class="translateable-info" [class.translated]="t.isTranslated">
       <span class="task-checkbox">
-        <input type="checkbox" />
+        <input type="checkbox" [(ngModel)]="t.done"/>
         <img class="checkbox checked" src="assets/img/ic_check_box_white_24px.svg" height="30px"/>
         <img class="checkbox unchecked" src="assets/img/ic_check_box_outline_blank_white_24px.svg" height="30px"/>
       </span>
       <span class="task-title">
-        <input type="text" value="Blumen giessen" />
+        <input type="text" [(ngModel)]="t.text" />
       </span>
-      <span class="task-scheduling"></span>
-      <img class="clickable options" src="assets/img/ic_more_vert_white_48px.svg" height="30px" (click)="onTranslate()"/>
+      <span class="task-scheduling">{{t.generateDisplayableDeadline()}}</span>
+      <img class="clickable options" src="assets/img/ic_more_vert_white_48px.svg" height="30px" (click)="t.toggleTranslation()"/>
     </div>
     <div class="translateable-options">
-      <img class="clickable delete" src="assets/img/ic_delete_forever_white_48px.svg" height="30px" />
-      <img class="clickable schedule" src="assets/img/ic_schedule_white_48px.svg" height="30px" />
-      <img class="clickable de-schedule" src="assets/img/ic_restore_white_48px.svg" height="30px" />
+      <img class="clickable delete" src="assets/img/ic_delete_forever_white_48px.svg" height="30px" (click)="removeTask(t)" />
+      <img class="clickable schedule" src="assets/img/ic_schedule_white_48px.svg" height="30px" (click)="scheduleTask(t)" />
+      <img class="clickable de-schedule" src="assets/img/ic_restore_white_48px.svg" height="30px" (click)="descheduleTask(t)" />
     </div>
   </div>
 </section>

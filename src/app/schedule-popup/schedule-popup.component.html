@@ -1,17 +1,10 @@
-<div class="background no-display">
+<div class="background" [class.no-display]="noDisplay">
   <h1 class="no-display">Aufgabe terminieren</h1>
-  <div class="popup no-display">
-      <p>Aufgabe: Blumen giessen</p>
-      <p>Aktuelle Terminierung: keine</p>
-      <input type="datetime" placeholder="Termin wählen..." required />
+  <div class="popup no-display" *ngIf="task">
+      <p>Aufgabe: {{task.text}}</p>
+      <p>Aktuelle Terminierung: {{task.deadline}}</p>
+      <input type="text" placeholder="Termin oder Zeitraum..." required />
       <input type="submit" value="Bestätigen" />
-      <input type="button" value="Abbrechen" />
-  </div>
-  <h1 class="no-display">Terminierung zurücksetzten</h1>
-  <div class="popup no-display">
-      <p>Aufgabe: Blumen giessen</p>
-      <p>Möchtest du die Terminierung dieser Aufgabe zurücksetzten?</p>
-      <input type="submit" value="Ja, Terminierung zurücksetzten" />
       <input type="button" value="Abbrechen" />
   </div>
 </div>
