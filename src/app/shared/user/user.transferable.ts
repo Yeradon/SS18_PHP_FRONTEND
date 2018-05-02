@@ -1,4 +1,6 @@
 export class UserTransferable {
-  id: string;
-  name: string;
+  public id: string;
+  public username: string;
+  public name: string;
+  public surname: string;
 }

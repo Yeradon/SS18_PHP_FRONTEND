@@ -1,0 +1,20 @@
+.changePasswd, .deleteAccount {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 150px;
+  opacity: 1;
+  transition: .5s;
+}
+
+.no-display {
+  height: 0;
+  opacity: 0;
+  overflow: hidden;
+}
+
+.deleteBtn {
+  background-color: #A8383B;
+  color: white;
+}
