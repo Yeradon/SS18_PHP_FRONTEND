@@ -1,14 +1,33 @@
 import { Injectable } from '@angular/core';
 
+
+class Message {
+  content: string;
+  time: number;
+}
 @Injectable({
   providedIn: 'root'
 })
 export class MessageService {
+  private static readonly DEFAULT_HIDE_TIME: number = 5000;
 
-  messages: string [] = [];
+  messages: Message[] = [];
 
   add(message: string) {
-    this.messages.push(message);
+    this.messages.push({
+        content: message,
+        time: new Date().getTime(),
+    });
+
+    // schedule a timer to hide message after DEFAULT_HIDE_TIME milliseconds
+    setTimeout(() => {
+      this.messages = this.messages.filter((message: Message) => {
+        if((message.time + MessageService.DEFAULT_HIDE_TIME - new Date().getTime()) < 0) {
+          return false;
+        }
+        return true;
+      });
+    }, MessageService.DEFAULT_HIDE_TIME + 1);
   }
 
   clear() {

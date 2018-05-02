@@ -4,6 +4,6 @@
     <span class="clickable" (click)="messageService.clear()">X</span>
   </div>
   <p *ngFor='let message of messageService.messages'>
-    {{message}}
+    {{message.content}}
   </p>
 </div>
