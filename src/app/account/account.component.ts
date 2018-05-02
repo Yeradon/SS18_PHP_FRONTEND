@@ -13,7 +13,7 @@ const TEXT_CANCEL: string = "Abbrechen";
 })
 export class AccountComponent implements OnInit {
 
-  private user: User;
+  public user: User;
   public showChangePassword:boolean = false;
   public showDeleteAccount:boolean = false;
   public textChangePassword: string = TEXT_CHANGE_PASSWD;
