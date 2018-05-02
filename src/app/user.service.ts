@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
-import { User } from './user/user';
+import { User } from './shared/user/user';
 
 const USER: User = {
   id: '0',
   username: 'test',
   name: 'Max',
-  surname: 'Mustermann'
+  surname: 'Mustermann',
+  tasks: null
 }
 
 @Injectable({
