@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Task } from './shared/task/task';
-import {BehaviorSubject} from "rxjs/Rx";
+import {BehaviorSubject, Observable, Subject} from "rxjs/Rx";
+import {isNullOrUndefined} from "util";
 
 const TASKS: Task[] = [
   { id: '0', text: 'Blumen giessen', done: false, deadline: new Date('2018-04-29T18:00:00'), userID: null, user: null },
@@ -15,6 +16,23 @@ const TASKS: Task[] = [
   { id: '9', text: 'Schuhe putzen', done: false, deadline: new Date('2018-05-29T10:00:00'), userID: null, user: null },
   { id: '10', text: 'Zeitmaschine erfinden', done: false, deadline: new Date('2000-04-29T18:00:00'), userID: null, user: null }
 ];
+
+enum CHANGE_MODE {
+  CHANGED,
+  ADDED,
+  DELETED
+}
+class ChangeEvent<T> {
+  public readonly mode: CHANGE_MODE;
+  public readonly oldTask: T | null;
+  public readonly newTask: T | null;
+
+  constructor(mode: CHANGE_MODE, old: T, newTask: T) {
+    this.mode = mode;
+    this.oldTask = !isNullOrUndefined(old) ? old : null;
+    this.newTask = !isNullOrUndefined(newTask) ? newTask : null;
+  }
+}
 
 @Injectable({
   providedIn: 'root'
@@ -31,10 +49,10 @@ export class TaskService {
     return this._taskStorage;
   }
 
-  private _tasksObservable: BehaviorSubject<Task[]> = new BehaviorSubject([]);
-  public get tasksObservable(): BehaviorSubject<Task[]> {
-    return this._tasksObservable;
-  }
+  public readonly tasksObservable: BehaviorSubject<Task[]> = new BehaviorSubject([]);
+
+
+  public readonly changeObservable: Subject<ChangeEvent<Task>> = new Subject();
 
   constructor() {
     this.tasks = TASKS;
@@ -46,10 +64,16 @@ export class TaskService {
    * @param {Task} task
    */
   public addTask(task: Task) {
+    let oldTask: Task;
     var newTasks = this.tasks.filter((_task: Task) => {
-      if(task.id == _task.id) return false;
+      if(task.id == _task.id) {
+        oldTask = _task;
+        return false;
+      }
       return true;
     });
+    let mode = !isNullOrUndefined(oldTask) ? CHANGE_MODE.CHANGED : CHANGE_MODE.ADDED;
+    this.changeObservable.next(new ChangeEvent<Task>(mode, oldTask, task));
     newTasks.push(task);
     this.tasks = newTasks;
   }
@@ -59,7 +83,9 @@ export class TaskService {
       if(task.id == _task.id) return false;
       return true;
     });
-    if(this.tasks.length != newTasks.length) this.tasks = newTasks;
+    if(this.tasks.length != newTasks.length) {
+      this.changeObservable.next(new ChangeEvent<Task>(CHANGE_MODE.DELETED, task, null));
+      this.tasks = newTasks;
+    }
   }
-
 }
