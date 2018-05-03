@@ -3,7 +3,6 @@ import { User } from '../user/user';
 
 export class Task extends TaskTransferable {
   get user(): User {
-
     throw new Error('Not implemented!');
   }
 

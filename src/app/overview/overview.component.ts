@@ -30,27 +30,27 @@ export class OverviewComponent implements OnInit {
     */
   ngOnInit() {
 
-    var t: Task[] = this.taskService.loadTasks();
+    this.taskService.tasksObservable.subscribe((tasks: Task[]) => {
+      this.tasks_unscheduled = [];
+      this.tasks_scheduled = [];
+      this.tasks_urgent = [];
+      tasks.forEach((task: Task) => {
+          var task_d: TaskDisplayable = new TaskDisplayable(
+            task.id,
+            task.text,
+            task.done,
+            task.deadline
+          );
 
-    for (let task of t) {
-
-      var task_d: TaskDisplayable = new TaskDisplayable(
-        task.id,
-        task.text,
-        task.done,
-        task.deadline
-      );
-
-      if (!task.deadline || task.done) {
-        this.tasks_unscheduled.push(task_d);
-      } else if (task.deadline < new Date()) {
-        this.tasks_urgent.push(task_d);
-      } else {
-        this.tasks_scheduled.push(task_d);
-      }
-
-    }
-
+          if (!task.deadline || task.done) {
+            this.tasks_unscheduled.push(task_d);
+          } else if (task.deadline < new Date()) {
+            this.tasks_urgent.push(task_d);
+          } else {
+            this.tasks_scheduled.push(task_d);
+          }
+      });
+    });
   }
 
   /*
@@ -81,29 +81,16 @@ export class OverviewComponent implements OnInit {
    */
   public descheduleTask(task: TaskDisplayable): void {
 
-    if (this.removeTask(task)) {
-      task.deadline = null;
-      task.isTranslated = false;
-      this.tasks_unscheduled.push(task);
-    }
-
+    task.deadline = null;
+    this.taskService.addTask(task);
   }
 
   /*
    * Entfernt eine Aufgabe.
    */
-  public removeTask(task: TaskDisplayable): boolean {
+  public removeTask(task: TaskDisplayable) {
 
-    if (!this.removeElementFromArray(task, this.tasks_urgent)) {
-      if (!this.removeElementFromArray(task, this.tasks_scheduled)) {
-        if (!this.removeElementFromArray(task, this.tasks_unscheduled)) {
-          this.messageService.add('FEHLER: Aufgabe nicht gefunden.');
-          return false;
-        }
-      }
-    }
-
-    return true;
+    this.taskService.removeTask(task);
 
   }
 
