@@ -1,9 +1,11 @@
-<div class="msg show" *ngIf="messageService.messages.length">
-  <div class="flex">
-    <h1>INFO</h1>
-    <span class="clickable" (click)="messageService.clear()">X</span>
+<div class="msg-container" *ngIf="messageService.messages.length">
+  <div class="msg show" *ngFor='let message of messageService.messages'>
+    <div class="flex">
+      <h1>INFO</h1>
+      <h1 class="clickable" (click)="messageService.clear()">X</h1>
+    </div>
+    <p >
+      {{message.content}}
+    </p>
   </div>
-  <p *ngFor='let message of messageService.messages'>
-    {{message.content}}
-  </p>
 </div>
