@@ -118,6 +118,10 @@ input[type="submit"]:hover {
   cursor: pointer;
 }
 
+.clickable.disabled {
+  cursor: default;
+}
+
 .flex { /* erzeugt eine Flexbox mit Richtung "row" */
     display: flex;
     flex-direction: row;
@@ -208,7 +212,7 @@ input[type="submit"]:hover {
 @keyframes load {
     0%, 100% { transform: scale(1); }
     50% { transform: scale(0); }
-} 
+}
 
 /*
  * DESKTOP-DARSTELLUNG: HTML-Standardtags

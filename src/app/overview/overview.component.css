@@ -114,6 +114,10 @@
   padding: 0px;
 }
 
+.clickable.disabled {
+  background-color: #dadada !important;
+}
+
 /*
  * DESKTOP-DARSTELLUNG: Klassen zur Darstellung von Aufgaben
  */
