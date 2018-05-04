@@ -88,10 +88,14 @@ export class OverviewComponent implements OnInit {
   /*
    * Entfernt eine Aufgabe.
    */
-  public removeTask(task: TaskDisplayable) {
+  public async removeTask(task: TaskDisplayable) {
 
-    this.taskService.removeTask(task);
-
+    try {
+      await this.taskService.removeTask(task);
+    } catch(err) {
+      console.log("errrror");
+      this.messageService.add('Fehler beim Löschen der Aufgabe \'' + task.text + '\' (' + err.message + ')');
+    }
   }
 
   /*

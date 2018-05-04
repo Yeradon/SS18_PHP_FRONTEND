@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { Task } from './shared/task/task';
 import {BehaviorSubject, Observable, Subject} from "rxjs/Rx";
 import {isNullOrUndefined} from "util";
+import {HttpClient} from "@angular/common/http";
+import {catchError} from "rxjs/internal/operators";
 
 const TASKS: Task[] = [
   { id: '0', text: 'Blumen giessen', done: false, deadline: new Date('2018-04-29T18:00:00'), userID: null, user: null },
@@ -54,8 +56,16 @@ export class TaskService {
 
   public readonly changeObservable: Subject<ChangeEvent<Task>> = new Subject();
 
-  constructor() {
+  constructor(private http: HttpClient) {
     this.tasks = TASKS;
+  }
+
+  public createTask(task: Task) {
+    if(!isNullOrUndefined(task.id)) {
+      return false;
+    } else {
+
+    }
   }
 
   /**
@@ -78,14 +88,29 @@ export class TaskService {
     this.tasks = newTasks;
   }
 
-  public removeTask(task: Task) {
-    var newTasks = this.tasks.filter((_task: Task) => {
-      if(task.id == _task.id) return false;
-      return true;
-    });
-    if(this.tasks.length != newTasks.length) {
-      this.changeObservable.next(new ChangeEvent<Task>(CHANGE_MODE.DELETED, task, null));
-      this.tasks = newTasks;
-    }
+  /**
+   * Tries to delete a task.
+   * Will return a promise, which:
+   * - will resolve to true if the task is successfully deleted
+   * - will reject if a serverside error occurs (eg. 404 - Task not found)
+   * @param {Task} task
+   * @returns {Promise<boolean>}
+   */
+  public async removeTask(task: Task): Promise<boolean> {
+    return new Promise<boolean>((resolve, reject) => {
+      this.http.delete('https://php-testa.herokuapp.com/tasks/' + task.id).subscribe(res => {
+        var newTasks = this.tasks.filter((_task: Task) => {
+          if(task.id == _task.id) return false;
+          return true;
+        });
+        if(this.tasks.length != newTasks.length) {
+          this.changeObservable.next(new ChangeEvent<Task>(CHANGE_MODE.DELETED, task, null));
+          this.tasks = newTasks;
+        }
+        resolve(true);
+      }, err => {
+        reject(err);
+      });
+    })
   }
 }
