@@ -19,21 +19,29 @@ const TASKS: Task[] = [
   { id: '10', text: 'Zeitmaschine erfinden', done: false, deadline: new Date('2000-04-29T18:00:00'), userID: null, user: null }
 ];
 
-enum CHANGE_MODE {
+export enum CHANGE_MODE {
   CHANGED,
   ADDED,
   DELETED
 }
-class ChangeEvent<T> {
+export class ChangeEvent<T> {
   public readonly mode: CHANGE_MODE;
-  public readonly oldTask: T | null;
-  public readonly newTask: T | null;
+  public readonly oldVal: T | null;
+  public readonly newVal: T | null;
 
   constructor(mode: CHANGE_MODE, old: T, newTask: T) {
     this.mode = mode;
-    this.oldTask = !isNullOrUndefined(old) ? old : null;
-    this.newTask = !isNullOrUndefined(newTask) ? newTask : null;
+    this.oldVal = !isNullOrUndefined(old) ? old : null;
+    this.newVal = !isNullOrUndefined(newTask) ? newTask : null;
   }
+}
+export enum LOADING_MODE {
+  STARTED,
+  FINISHED
+}
+export class LoadingEvent<T> {
+  public mode: LOADING_MODE;
+  public target: T;
 }
 
 @Injectable({
@@ -53,7 +61,11 @@ export class TaskService {
 
   public readonly tasksObservable: BehaviorSubject<Task[]> = new BehaviorSubject([]);
 
-
+  /**
+   * Observable that publishes LoadingEvents of the managed tasks.
+   * @type {Subject<LoadingEvent<Task>>}
+   */
+  public readonly tasksLoading: Subject<LoadingEvent<Task>> = new Subject<LoadingEvent<Task>>();
   public readonly changeObservable: Subject<ChangeEvent<Task>> = new Subject();
 
   constructor(private http: HttpClient) {
@@ -105,6 +117,7 @@ export class TaskService {
    * @returns {Promise<boolean>}
    */
   public async removeTask(task: Task): Promise<boolean> {
+    this.tasksLoading.next({mode: LOADING_MODE.STARTED, target: task});
     return new Promise<boolean>((resolve, reject) => {
       this.http.delete('https://php-testat.herokuapp.com/tasks/' + task.id).subscribe(res => {
         var newTasks = this.tasks.filter((_task: Task) => {
@@ -115,8 +128,10 @@ export class TaskService {
           this.changeObservable.next(new ChangeEvent<Task>(CHANGE_MODE.DELETED, task, null));
           this.tasks = newTasks;
         }
+        this.tasksLoading.next({mode: LOADING_MODE.FINISHED, target: task});
         resolve(true);
       }, err => {
+        this.tasksLoading.next({mode: LOADING_MODE.FINISHED, target: task});
         reject(err);
       });
     })

@@ -9,4 +9,13 @@ export class Task extends TaskTransferable {
   set user(user: User) {
     this.userID = user.id;
   }
+
+  /**
+   * Compares primary key of a tasks with primary key of this instance.
+   * @param {Task} task
+   * @returns {boolean}
+   */
+  public static sameTarget(_task:Task, task: Task): boolean {
+    return _task.id == task.id;
+  }
 }

@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Task } from '../shared/task/task';
-import { TaskService } from '../task.service';
+import {LOADING_MODE, LoadingEvent, TaskService} from '../task.service';
 import { TaskDisplayable } from '../shared/task/task.displayable';
 import { MessageService } from '../message.service';
 import { SchedulePopupComponent } from '../schedule-popup/schedule-popup.component';
+import {isNullOrUndefined} from "util";
 
 @Component({
   selector: 'app-overview',
@@ -51,7 +52,31 @@ export class OverviewComponent implements OnInit {
           }
       });
     });
+
+    this.taskService.tasksLoading.subscribe((event: LoadingEvent<Task>) => {
+      let task = this.findDisplayableByTask(event.target);
+      console.log(task);
+      if(!isNullOrUndefined(task)){
+        task.isTranslated = false;
+        this.messageService.add((event.mode == LOADING_MODE.STARTED ? 'Starte' : 'Stoppe') + " Laden von " + task.text + ".");
+        task.isLoading = event.mode == LOADING_MODE.STARTED ? true : false;
+      }
+    });
   }
+
+  private findDisplayableByTask(task: Task): TaskDisplayable {
+    let buffer: TaskDisplayable = null;
+    const cmpFunction = (_task: TaskDisplayable) => {
+      if(Task.sameTarget(_task, task)) {
+        buffer = _task;
+      }
+    };
+    this.tasks_urgent.forEach(cmpFunction);
+    this.tasks_scheduled.forEach(cmpFunction);
+    this.tasks_unscheduled.forEach(cmpFunction);
+    return buffer;
+  }
+
 
   /*
    * Erstellt eine neue Aufgabe und fügt sie zunächst der Liste
@@ -89,18 +114,16 @@ export class OverviewComponent implements OnInit {
    * Entfernt eine Aufgabe.
    */
   public async removeTask(task: TaskDisplayable) {
-
     try {
       await this.taskService.removeTask(task);
     } catch(err) {
-      console.log("errrror");
       this.messageService.add('Fehler beim Löschen der Aufgabe \'' + task.text + '\' (' + err.message + ')');
     }
   }
 
   /*
    * Entfernt ein Element aus einem Array. Gibt true zurück, wenn das Element
-   * im Array vorhanden war und entfern wurde.
+   * im Array vorhanden war und entfernt wurde.
    */
   private removeElementFromArray(element: Object, array: Object[]): boolean {
     var index = array.indexOf(element);

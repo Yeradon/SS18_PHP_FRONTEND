@@ -69,4 +69,10 @@ export class TaskDisplayable extends Task {
 
   }
 
+  /**
+   * Indicates whether there are network operations happening regarding this task
+   * @type {boolean}
+   */
+  public isLoading: boolean = false;
+
 }
