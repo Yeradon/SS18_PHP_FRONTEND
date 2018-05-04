@@ -182,6 +182,34 @@ input[type="submit"]:hover {
   background-color: #eaeaea;
 }
 
+.loading {
+  width: 30px;
+  height: 30px;
+  box-sizing: border-box;
+  position: relative;
+}
+
+.loading .loader_0, .loading .loader_1 {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: #2E4172;
+  opacity: .5;
+  animation: load 2s infinite;
+}
+
+.loading .loader_0 {
+  animation: load 2s infinite 1s;
+}
+
+@keyframes load {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(0); }
+} 
+
 /*
  * DESKTOP-DARSTELLUNG: HTML-Standardtags
  */
