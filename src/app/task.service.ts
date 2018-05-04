@@ -3,7 +3,7 @@ import { Task } from './shared/task/task';
 import {BehaviorSubject, Observable, Subject} from "rxjs/Rx";
 import {isNullOrUndefined} from "util";
 import {HttpClient} from "@angular/common/http";
-import {catchError} from "rxjs/internal/operators";
+import {environment} from "../environments/environment";
 
 const TASKS: Task[] = [
   { id: '0', text: 'Blumen giessen', done: false, deadline: new Date('2018-04-29T18:00:00'), userID: null, user: null },
@@ -74,6 +74,12 @@ export class TaskService {
    * @param {Task} task
    */
   public addTask(task: Task) {
+    let $serverCallObservable: Observable<Task>;
+    if(isNullOrUndefined(task.id)) {
+      $serverCallObservable = this.http.put<Task>(environment.BACKEND_URL + 'tasks', task);
+    } else {
+      $serverCallObservable = this.http.post<Task>(environment.BACKEND_URL + 'task/' + task.id, task);
+    }
     let oldTask: Task;
     var newTasks = this.tasks.filter((_task: Task) => {
       if(task.id == _task.id) {
@@ -88,6 +94,8 @@ export class TaskService {
     this.tasks = newTasks;
   }
 
+
+
   /**
    * Tries to delete a task.
    * Will return a promise, which:
@@ -98,7 +106,7 @@ export class TaskService {
    */
   public async removeTask(task: Task): Promise<boolean> {
     return new Promise<boolean>((resolve, reject) => {
-      this.http.delete('https://php-testa.herokuapp.com/tasks/' + task.id).subscribe(res => {
+      this.http.delete('https://php-testat.herokuapp.com/tasks/' + task.id).subscribe(res => {
         var newTasks = this.tasks.filter((_task: Task) => {
           if(task.id == _task.id) return false;
           return true;
