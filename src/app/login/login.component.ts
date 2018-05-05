@@ -10,6 +10,7 @@ export class LoginComponent implements OnInit {
 
   user: string = "";
   password: string = "";
+  isLoading: boolean = false;
   constructor(
     private authService: AuthenticationService
   ) { }
@@ -18,6 +19,12 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    this.authService.login(this.user, this.password);
+
+    // Http-Request simulieren
+    this.isLoading = true;
+    setTimeout(() => {
+      this.authService.login(this.user, this.password);
+      this.isLoading = false;
+    }, 1000);
   }
 }

@@ -1,16 +1,16 @@
 <div class="container flex">
   <img src="assets/img/todo-logo.svg" height="100px"/>
-  <div class="">
-      <input type="text"  [(ngModel)]="user" placeholder="Benutzername" required />
-      <input type="password" [(ngModel)]="password" placeholder="Passwort" required />
-      <input type="submit" value="Anmelden" (click)="login()" >
+  <form (ngSubmit)="login()">
+      <input type="text"  [(ngModel)]="user" name="user" placeholder="Benutzername" required />
+      <input type="password" [(ngModel)]="password" name="password" placeholder="Passwort" required />
+      <input [class.disabled]="isLoading" type="submit" name="submit" value="Anmelden" >
     <p>
       Noch kein Konto? <a href="">Registrieren</a>
     </p>
     <p>
       <a href="#">Passwort vergessen?</a>
     </p>
-  </div>
+  </form>
   <!-- <div class="">
     <input type="text" placeholder="Benutzername" required />
     <input type="password" placeholder="Passwort" required />
@@ -28,4 +28,10 @@
       <a href="#">Zurück zur Anmeldung</a>
     </p>
   </div> -->
+</div>
+<div class="full-screen-loading" *ngIf="isLoading">
+  <div class="loading" *ngIf="isLoading">
+    <div class="loader_0"></div>
+    <div class="loader_1"></div>
+  </div>
 </div>

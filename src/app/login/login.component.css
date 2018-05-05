@@ -28,6 +28,15 @@
   box-shadow: 2px 2px 0 2px #2E4172, -2px -2px 0 2px #2E4172, 2px -2px 0 2px #2E4172, -2px 2px 0 2px #2E4172;
 }
 
+.container input[type="submit"] {
+  background-color: #2E4172;
+  border: 1px solid #061539;
+}
+
+.container input[type="submit"]:hover {
+  background-color: #162856;
+}
+
 .container p {
   color: white;
   font-size: 75%;
@@ -40,4 +49,9 @@
 
 .container a:hover {
   color: #bababa;
+}
+
+.loading {
+  width: 100px;
+  height: 100px;
 }
