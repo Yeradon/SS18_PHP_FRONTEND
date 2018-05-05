@@ -3,7 +3,7 @@
   <form (ngSubmit)="login()">
       <input type="text"  [(ngModel)]="user" name="user" placeholder="Benutzername" required />
       <input type="password" [(ngModel)]="password" name="password" placeholder="Passwort" required />
-      <input [class.disabled]="isLoading" type="submit" name="submit" value="Anmelden" >
+      <input type="submit" name="submit" value="Anmelden" >
     <p>
       Noch kein Konto? <a href="">Registrieren</a>
     </p>

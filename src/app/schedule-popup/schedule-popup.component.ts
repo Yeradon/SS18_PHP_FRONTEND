@@ -1,28 +1,83 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { TaskDisplayable } from '../shared/task/task.displayable';
+import { TaskService } from '../task.service';
 
 @Component({
   selector: 'app-schedule-popup',
   templateUrl: './schedule-popup.component.html',
   styleUrls: ['./schedule-popup.component.css']
 })
-export class SchedulePopupComponent implements OnInit {
+export class SchedulePopupComponent {
 
-  task: TaskDisplayable;
+  date: string = new Date().toISOString();
+  time: string = new Date().toISOString();
+
   noDisplay: boolean = true;
 
-  public scheduleTask(task: TaskDisplayable): TaskDisplayable {
+  private _task: TaskDisplayable;
 
+  constructor(
+    private taskService: TaskService
+  ) { }
+
+  @Input() public get task(): TaskDisplayable {
+    return this._task;
+  }
+
+  public set task(task : TaskDisplayable) {
+
+    if (task == null) {
+      return;
+    }
+
+    this._task = task;
+
+    if (this.task.deadline == null) {
+      this.date = this.toDatefieldString(new Date());
+      this.time = this.toTimefieldString(new Date());
+    } else {
+      this.date = this.toDatefieldString(this.task.deadline);
+      this.time = this.toTimefieldString(this.task.deadline);
+    }
+
+  }
+
+  public show(): void {
     this.noDisplay = false;
-    this.task = task;
+  }
 
-    return null;
+  public submit(): void {
+
+    var isoString = this.date + 'T' + this.time;
+    this.task.deadline = new Date(isoString);
+
+    this.taskService.addTask(this.task);
+
+    this.cancel();
 
   }
 
-  constructor() { }
-
-  ngOnInit() {
+  public cancel(): void {
+    this.noDisplay = true;
   }
+
+  private toDatefieldString(date: Date): string {
+    return this.pad(date.getFullYear()) +
+    '-' + this.pad(date.getMonth() + 1) +
+    '-' + this.pad(date.getDate());
+  }
+
+  private toTimefieldString(date: Date): string {
+    return this.pad(date.getHours()) +
+    ':' + this.pad(date.getMinutes()) +
+    ':' + this.pad(date.getSeconds());
+  }
+
+  private pad(number): string {
+      if (number < 10) {
+        return '0' + number;
+      }
+      return number;
+    }
 
 }

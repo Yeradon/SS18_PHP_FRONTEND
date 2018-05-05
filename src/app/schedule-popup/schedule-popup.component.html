@@ -1,10 +1,13 @@
 <div class="background" [class.no-display]="noDisplay">
-  <h1 class="no-display">Aufgabe terminieren</h1>
-  <div class="popup no-display" *ngIf="task">
+  <h1 *ngIf="task">Aufgabe einplanen</h1>
+  <div class="popup" *ngIf="task">
       <p>Aufgabe: {{task.text}}</p>
       <p>Aktuelle Terminierung: {{task.deadline}}</p>
-      <input type="text" placeholder="Termin oder Zeitraum..." required />
-      <input type="submit" value="Bestätigen" />
-      <input type="button" value="Abbrechen" />
+      <form (ngSubmit)="submit()">
+        <input type="date" [(ngModel)]="date" name="date" placeholder="Datum" required />
+        <input type="time" [(ngModel)]="time" name="time" placeholder="Zeit" required />
+        <input type="submit" name="submit" value="Bestätigen" />
+        <input type="button" name="cancel" value="Abbrechen" (click)="cancel()" />
+      </form>
   </div>
 </div>

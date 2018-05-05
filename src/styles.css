@@ -122,12 +122,6 @@ input[type="submit"]:hover {
   cursor: default;
 }
 
-.disabled {
-  background-color: #dadada !important;
-  border: 1px solid #bababa !important;
-  cursor: default !important;
-}
-
 .flex { /* erzeugt eine Flexbox mit Richtung "row" */
     display: flex;
     flex-direction: row;

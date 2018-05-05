@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Task } from '../shared/task/task';
-import {LOADING_MODE, LoadingEvent, TaskService} from '../task.service';
+import { LOADING_MODE, LoadingEvent, TaskService } from '../task.service';
 import { TaskDisplayable } from '../shared/task/task.displayable';
 import { MessageService } from '../message.service';
 import { SchedulePopupComponent } from '../schedule-popup/schedule-popup.component';
-import {isNullOrUndefined} from "util";
+import { isNullOrUndefined } from "util";
 
 @Component({
   selector: 'app-overview',
@@ -17,6 +17,11 @@ export class OverviewComponent implements OnInit {
   tasks_urgent: TaskDisplayable[] = [];
   tasks_scheduled: TaskDisplayable[] = [];
   tasks_unscheduled: TaskDisplayable[] = [];
+
+  task2BeScheduled: TaskDisplayable;
+
+  @ViewChild(SchedulePopupComponent)
+  private schedulePopup: SchedulePopupComponent;
 
   constructor(
     private taskService: TaskService,
@@ -77,26 +82,13 @@ export class OverviewComponent implements OnInit {
     return buffer;
   }
 
-
-  /*
-   * Erstellt eine neue Aufgabe und fügt sie zunächst der Liste
-   * tasks_unscheduled hinzu.
-   */
-  public createTask(): void {
-
-    // TODO Iplementieren
-    this.messageService.add('Funktion noch nicht verfügbar.');
-
-  }
-
   /*
    * Zeigt eine Bildschirmmaske an, um die Terminierung einer Aufgabe zu ändern
    */
   public scheduleTask(task: TaskDisplayable): void {
 
-    // TODO Iplementieren
-    this.messageService.add('Funktion noch nicht verfügbar.');
-    // new SchedulePopupComponent().scheduleTask(task);
+    this.task2BeScheduled = task;
+    this.schedulePopup.show();
 
   }
 
