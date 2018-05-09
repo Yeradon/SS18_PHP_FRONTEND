@@ -1,33 +1,46 @@
 <div class="container flex">
   <img src="assets/img/todo-logo.svg" height="100px"/>
-  <form (ngSubmit)="login()">
-      <input type="text"  [(ngModel)]="user" name="user" placeholder="Benutzername" required />
-      <input type="password" [(ngModel)]="password" name="password" placeholder="Passwort" required />
-      <input type="submit" name="submit" value="Anmelden" >
-    <p>
-      Noch kein Konto? <a href="">Registrieren</a>
-    </p>
-    <p>
-      <a href="#">Passwort vergessen?</a>
-    </p>
-  </form>
-  <!-- <div class="">
-    <input type="text" placeholder="Benutzername" required />
-    <input type="password" placeholder="Passwort" required />
-    <input type="password" placeholder="Passwort" required />
-    <input type="submit" value="Registrieren" />
-    <p>
-      <a href="">Zurück zur Anmeldung</a>
-    </p>
+  <div class="forms-container">
+    <div class="form-container" [class.no-display]="showForm!=0">
+      <form (ngSubmit)="login()">
+          <input type="text"  [(ngModel)]="user" name="user" placeholder="Benutzername" required />
+          <input type="password" [(ngModel)]="password" name="password" placeholder="Passwort" required />
+          <input type="submit" name="submit" value="Anmelden" >
+        <p>
+          Noch kein Konto? <span class="clickable" (click)="show(1)">Registrieren</span>
+        </p>
+        <p>
+          <span class="clickable" (click)="show(2)">Passwort vergessen?</span>
+        </p>
+      </form>
+    </div>
+    <div class="form-container" [class.no-display]="showForm!=1">
+      <form>
+        <input type="text" placeholder="Benutzername" name="user" required />
+        <input type="text" placeholder="Vorname" name="name" required />
+        <input type="text" placeholder="Nachname" name="surname" required />
+        <input type="password" placeholder="Passwort" name="password" required />
+        <input type="password" placeholder="Passwort widerholen" name="password-repeat" required />
+        <input type="submit" value="Registrieren" name="submit"/>
+        <p>
+          <span class="clickable" (click)="show(0)">Zurück zur Anmeldung</span>
+        </p>
+      </form>
+    </div>
+    <div class="form-container" [class.no-display]="showForm!=2">
+      <form>
+        <p>
+          Sorry, bruh.
+        </p>
+        <p>
+          Bitte wende dich an einen Administrator.
+        </p>
+        <p>
+          <span class="clickable" (click)="show(0)">Zurück zur Anmeldung</span>
+        </p>
+      </form>
+    </div>
   </div>
-  <div class="">
-    <p>
-      Sorry, bruh.
-    </p>
-    <p>
-      <a href="#">Zurück zur Anmeldung</a>
-    </p>
-  </div> -->
 </div>
 <div class="full-screen-loading" *ngIf="isLoading">
   <div class="loading" *ngIf="isLoading">

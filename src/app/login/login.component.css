@@ -13,6 +13,12 @@
   justify-content: space-around;
 }
 
+.container form {
+  max-height: 1000px;
+  opacity: 1;
+  transition: .5s;
+}
+
 .container input {
   color: white;
   background-color: #0a0a0a;
@@ -51,7 +57,39 @@
   color: #bababa;
 }
 
+.form-container {
+  width: 100%;
+  transition: .5s ease-in-out;
+}
+
+.forms-container {
+  width: 100%;
+}
+
+.no-display form {
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+}
+
 .loading {
   width: 100px;
   height: 100px;
+}
+
+.clickable {
+  padding: 0;
+  text-decoration: underline;
+}
+
+.clickable:hover {
+  color: #bababa;
+}
+
+@media (min-width: 1300px) {
+
+  .forms-container {
+    width: 50%;
+  }
+
 }

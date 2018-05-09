@@ -11,6 +11,8 @@ export class LoginComponent implements OnInit {
   user: string = "";
   password: string = "";
   isLoading: boolean = false;
+  showForm: number = 0;
+
   constructor(
     private authService: AuthenticationService
   ) { }
@@ -26,5 +28,11 @@ export class LoginComponent implements OnInit {
       this.authService.login(this.user, this.password);
       this.isLoading = false;
     }, 1000);
+
   }
+
+  public show(formId: number): void {
+    this.showForm = formId;
+  }
+
 }
