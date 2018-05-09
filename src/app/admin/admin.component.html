@@ -1,34 +1,44 @@
 <section>
   <h1>Administrator-Bereich</h1>
-  <input type="text" name="user" placeholder="Nach Benutzern suchen..." />
+  <input type="text" name="filter" [(ngModel)]="filter" (input)="filter_onInput()" placeholder="Nach Benutzern suchen..." />
   <div class="flex">
     <label class="blue">ADMINISTRATOREN</label>
   </div>
-  <div class="translateable">
-    <div class="translateable-info" [class.translated]="isTranslated">
-      <img class="user-img" src="assets/img/ic_person_grey_48px.svg" height="30px" />
-      <span class="user-username">admin</span>
-      <span class="user-fullname">Administrator</span>
-      <img class="clickable options" src="assets/img/ic_more_vert_white_48px.svg" height="30px" (click)="onTranslate()"/>
+  <div *ngFor="let u of admins">
+    <div class="translateable" *ngIf="!u.isHidden">
+      <div class="translateable-info" [class.translated]="u.isTranslated">
+        <img class="user-img" src="assets/img/ic_person_grey_48px.svg" height="30px" />
+        <span class="user-username">{{u.username}}</span>
+        <span class="user-fullname">{{u.name + ' ' + u.surname}}</span>
+        <img class="clickable options" src="assets/img/ic_more_vert_white_48px.svg" height="30px" (click)="u.toggleTranslation()"/>
+      </div>
+      <div class="translateable-options">
+        <img class="clickable delete" src="assets/img/ic_delete_forever_white_48px.svg" height="30px" />
+        <img class="clickable change-role" src="assets/img/ic_person_outline_white_48px.svg" height="30px" />
+      </div>
     </div>
-    <div class="translateable-options">
-      <img class="clickable delete" src="assets/img/ic_delete_forever_white_48px.svg" height="30px" />
-      <img class="clickable change-role" src="assets/img/ic_person_outline_white_48px.svg" height="30px" />
-    </div>
+  </div>
+  <div class="flex" *ngIf="hiddenAdmins > 0">
+    <label >{{hiddenAdmins}} EINTRÄGE SIND AKTUELL AUSGEBLENDET. <span style="text-decoration: underline;" (click)="filter_onReset()">ALLE ANZEIGEN</span></label>
   </div>
   <div class="flex">
     <label class="blue">BENUTZER</label>
   </div>
-  <div class="translateable">
-    <div class="translateable-info" [class.translated]="isTranslated">
-      <img class="user-img" src="assets/img/ic_person_outline_grey_48px.svg" height="30px" />
-      <span class="user-username">mmustermann</span>
-      <span class="user-fullname">Max Mustermann</span>
-      <img class="clickable options" src="assets/img/ic_more_vert_white_48px.svg" height="30px" (click)="onTranslate()"/>
+  <div *ngFor="let u of users">
+    <div class="translateable" *ngIf="!u.isHidden">
+      <div class="translateable-info" [class.translated]="u.isTranslated">
+        <img class="user-img" src="assets/img/ic_person_outline_grey_48px.svg" height="30px" />
+        <span class="user-username">{{u.username}}</span>
+        <span class="user-fullname">{{u.name + ' ' + u.surname}}</span>
+        <img class="clickable options" src="assets/img/ic_more_vert_white_48px.svg" height="30px" (click)="u.toggleTranslation()"/>
+      </div>
+      <div class="translateable-options">
+        <img class="clickable delete" src="assets/img/ic_delete_forever_white_48px.svg" height="30px" />
+        <img class="clickable change-role" src="assets/img/ic_person_white_48px.svg" height="30px" />
+      </div>
     </div>
-    <div class="translateable-options">
-      <img class="clickable delete" src="assets/img/ic_delete_forever_white_48px.svg" height="30px" />
-      <img class="clickable change-role" src="assets/img/ic_person_white_48px.svg" height="30px" />
-    </div>
+  </div>
+  <div class="flex" *ngIf="hiddenUsers > 0">
+    <label >{{hiddenUsers}} EINTRÄGE SIND AKTUELL AUSGEBLENDET. <span style="text-decoration: underline;" (click)="filter_onReset()">ALLE ANZEIGEN</span></label>
   </div>
 </section>
