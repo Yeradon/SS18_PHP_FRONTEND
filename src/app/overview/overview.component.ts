@@ -35,27 +35,28 @@ export class OverviewComponent implements OnInit {
     * - tasks_unscheduled: nicht eingeplante und bereits erledigte Aufgaben
     */
   ngOnInit() {
-
-    this.taskService.tasksObservable.subscribe((tasks: Task[]) => {
+    this.taskService.syncTasks().then(() => {
       this.tasks_unscheduled = [];
       this.tasks_scheduled = [];
       this.tasks_urgent = [];
-      tasks.forEach((task: Task) => {
-          var task_d: TaskDisplayable = new TaskDisplayable(
-            task.id,
-            task.text,
-            task.done,
-            task.deadline
-          );
+      this.taskService.tasks.forEach((task: Task) => {
+        var task_d: TaskDisplayable = new TaskDisplayable(
+          task.id,
+          task.text,
+          task.done,
+          task.deadline
+        );
 
-          if (!task.deadline || task.done) {
-            this.tasks_unscheduled.push(task_d);
-          } else if (task.deadline < new Date()) {
-            this.tasks_urgent.push(task_d);
-          } else {
-            this.tasks_scheduled.push(task_d);
-          }
+        if (!task.deadline || task.done) {
+          this.tasks_unscheduled.push(task_d);
+        } else if (task.deadline < new Date()) {
+          this.tasks_urgent.push(task_d);
+        } else {
+          this.tasks_scheduled.push(task_d);
+        }
       });
+    }, (err) => {
+      console.log(err);
     });
 
     this.taskService.tasksLoading.subscribe((event: LoadingEvent<Task>) => {

@@ -4,6 +4,8 @@ import {BehaviorSubject, Observable, Subject} from "rxjs/Rx";
 import {isNullOrUndefined} from "util";
 import {HttpClient} from "@angular/common/http";
 import {environment} from "../environments/environment";
+import {TaskTransferable} from "./shared/task/task.transferable";
+import {map} from "rxjs/internal/operators";
 
 const TASKS: Task[] = [
   { id: '0', text: 'Blumen giessen', done: false, deadline: new Date('2018-04-29T18:00:00'), userID: null, user: null },
@@ -53,13 +55,10 @@ export class TaskService {
 
   public set tasks(tasks: Task[]) {
     this._taskStorage = tasks;
-    this.tasksObservable.next(tasks);
   }
   public get tasks(): Task[] {
     return this._taskStorage;
   }
-
-  public readonly tasksObservable: BehaviorSubject<Task[]> = new BehaviorSubject([]);
 
   /**
    * Observable that publishes LoadingEvents of the managed tasks.
@@ -69,14 +68,44 @@ export class TaskService {
   public readonly changeObservable: Subject<ChangeEvent<Task>> = new Subject();
 
   constructor(private http: HttpClient) {
-    this.tasks = TASKS;
+    this.tasks = [];
   }
 
-  public createTask(task: Task) {
-    if(!isNullOrUndefined(task.id)) {
-      return false;
-    } else {
+  /**
+   * Syncs the current task set with the server.
+   * Server is single source of truth.
+   * Removes all tasks, that don't exist on server,
+   * adds tasks, that only exist on server,
+   * and modifies tasks, that differ from the version on the server.
+   */
+  public async syncTasks(): Promise<void> {
+    return new Promise<void>((resolve, reject) => {
+      this.http.get<Task[]>(environment.BACKEND_URL + 'task').pipe(
+        map(this.parseResult)
+      ).subscribe((tasks) => {
+        this.tasks = tasks;
+        resolve();
+      }, (err) => {
+        console.log(err);
+        reject(err)
+      })
+    });
+  }
 
+  public async createTask(task: Task): Promise<Task> {
+    if(!isNullOrUndefined(task.id)) {
+      return null;
+    } else {
+      return new Promise<Task>((resolve, reject) => {
+        this.http.put<Task>(environment.BACKEND_URL + "/tasks", task).subscribe(
+        (_task: Task) => {
+          this.tasks.push(_task);
+          this.changeObservable.next(new ChangeEvent<Task>(CHANGE_MODE.ADDED, null, _task));
+          resolve(_task);
+        }, (err) => {
+          reject(err);
+        });
+      });
     }
   }
 
@@ -135,5 +164,14 @@ export class TaskService {
         reject(err);
       });
     })
+  }
+
+  private parseResult(tasks: Task[]): Task[] {
+    tasks.forEach((task) => {
+      if(!(task.deadline instanceof Date)){
+        task.deadline = new Date(task.deadline);
+      }
+    });
+    return tasks;
   }
 }
