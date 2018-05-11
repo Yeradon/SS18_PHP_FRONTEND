@@ -8,9 +8,8 @@ describe('SchedulePopupComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SchedulePopupComponent ]
-    })
-    .compileComponents();
+      declarations: [SchedulePopupComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

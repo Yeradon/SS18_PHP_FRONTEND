@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {AuthenticationService} from "../shared/authentication/authentication.service";
+import { AuthenticationService } from '../shared/authentication/authentication.service';
 
 @Component({
   selector: 'app-menu',
@@ -7,16 +7,11 @@ import {AuthenticationService} from "../shared/authentication/authentication.ser
   styleUrls: ['./menu.component.css']
 })
 export class MenuComponent implements OnInit {
+  constructor(private authService: AuthenticationService) {}
 
-  constructor(
-    private authService: AuthenticationService
-  ) { }
-
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   logout() {
     this.authService.logout();
   }
-
 }

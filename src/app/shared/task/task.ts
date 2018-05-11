@@ -15,7 +15,7 @@ export class Task extends TaskTransferable {
    * @param {Task} task
    * @returns {boolean}
    */
-  public static sameTarget(_task:Task, task: Task): boolean {
+  public static sameTarget(_task: Task, task: Task): boolean {
     return _task.id == task.id;
   }
 }

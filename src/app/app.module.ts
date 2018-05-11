@@ -10,9 +10,9 @@ import { MessagesComponent } from './messages/messages.component';
 import { LoginComponent } from './login/login.component';
 import { AdminComponent } from './admin/admin.component';
 import { SchedulePopupComponent } from './schedule-popup/schedule-popup.component';
-import {AuthenticationService} from "./shared/authentication/authentication.service";
-import {FormsModule} from "@angular/forms";
-import {HttpClientModule} from "@angular/common/http";
+import { AuthenticationService } from './shared/authentication/authentication.service';
+import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -25,13 +25,8 @@ import {HttpClientModule} from "@angular/common/http";
     AdminComponent,
     SchedulePopupComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    FormsModule,
-    HttpClientModule
-  ],
+  imports: [BrowserModule, AppRoutingModule, FormsModule, HttpClientModule],
   providers: [AuthenticationService],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}

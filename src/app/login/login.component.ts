@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {AuthenticationService} from "../shared/authentication/authentication.service";
+import { AuthenticationService } from '../shared/authentication/authentication.service';
 
 @Component({
   selector: 'app-login',
@@ -7,32 +7,25 @@ import {AuthenticationService} from "../shared/authentication/authentication.ser
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-
-  user: string = "";
-  password: string = "";
+  user: string = '';
+  password: string = '';
   isLoading: boolean = false;
   showForm: number = 0;
 
-  constructor(
-    private authService: AuthenticationService
-  ) { }
+  constructor(private authService: AuthenticationService) {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   login() {
-
     // Http-Request simulieren
     this.isLoading = true;
     setTimeout(() => {
       this.authService.login(this.user, this.password);
       this.isLoading = false;
     }, 1000);
-
   }
 
   public show(formId: number): void {
     this.showForm = formId;
   }
-
 }

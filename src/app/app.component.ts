@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import {TaskService} from "./task.service";
-import {Task} from "./shared/task/task";
+import { TaskService } from './task.service';
+import { Task } from './shared/task/task';
 
 @Component({
   selector: 'app-root',
@@ -20,7 +20,7 @@ export class AppComponent {
   addEmptyTask(): void {
     let $task = new Task();
     $task.id = new Date().getTime().toString();
-    $task.userID = "1";
+    $task.userID = '1';
     this.taskService.addTask($task);
   }
 }

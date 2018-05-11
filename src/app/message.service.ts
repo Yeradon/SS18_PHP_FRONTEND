@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 
-
 class Message {
   content: string;
   time: number;
@@ -15,14 +14,19 @@ export class MessageService {
 
   add(message: string) {
     this.messages.push({
-        content: message,
-        time: new Date().getTime(),
+      content: message,
+      time: new Date().getTime()
     });
 
     // schedule a timer to hide message after DEFAULT_HIDE_TIME milliseconds
     setTimeout(() => {
       this.messages = this.messages.filter((message: Message) => {
-        if((message.time + MessageService.DEFAULT_HIDE_TIME - new Date().getTime()) < 0) {
+        if (
+          message.time +
+            MessageService.DEFAULT_HIDE_TIME -
+            new Date().getTime() <
+          0
+        ) {
           return false;
         }
         return true;
@@ -33,5 +37,4 @@ export class MessageService {
   clear() {
     this.messages = [];
   }
-
 }

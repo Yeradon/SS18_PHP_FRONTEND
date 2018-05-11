@@ -4,14 +4,13 @@ import { Task } from './task';
  * KLasse repraesentiert eine darstellbare Aufgabe
  */
 export class TaskDisplayable extends Task {
-
   isTranslated: boolean;
   deadlineDisplayable: string;
 
   /*
    * Initialisiert eine neue darstellbare Aufgabe
    */
-  constructor (id: string, text: string, done:boolean, deadline: Date) {
+  constructor(id: string, text: string, done: boolean, deadline: Date) {
     super();
     this.id = id;
     this.text = text;
@@ -30,8 +29,7 @@ export class TaskDisplayable extends Task {
   /*
    * Generiert einen lesbaren String aus der Deadline der Aufgabe
    */
-  public generateDisplayableDeadline():string {
-
+  public generateDisplayableDeadline(): string {
     if (!this.deadline) {
       return '';
     }
@@ -45,11 +43,11 @@ export class TaskDisplayable extends Task {
       this.deadlineDisplayable = 'VOR ';
     }
 
-    let years = Math.floor(millis/31540000000);
-    let months = Math.floor(millis/2628000000);
-    let weeks = Math.floor(millis/604800000);
-    let days = Math.floor(millis/86400000);
-    let hours = Math.floor(millis/3600000);
+    let years = Math.floor(millis / 31540000000);
+    let months = Math.floor(millis / 2628000000);
+    let weeks = Math.floor(millis / 604800000);
+    let days = Math.floor(millis / 86400000);
+    let hours = Math.floor(millis / 3600000);
 
     if (years > 1) {
       this.deadlineDisplayable += years + ' JAHREN';
@@ -66,7 +64,6 @@ export class TaskDisplayable extends Task {
     }
 
     return this.deadlineDisplayable;
-
   }
 
   /**
@@ -74,5 +71,4 @@ export class TaskDisplayable extends Task {
    * @type {boolean}
    */
   public isLoading: boolean = false;
-
 }
