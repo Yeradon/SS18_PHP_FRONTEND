@@ -10,7 +10,7 @@ import { AdminComponent } from '../admin/admin.component';
 import { SchedulePopupComponent } from '../schedule-popup/schedule-popup.component';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import {CommonModule} from "@angular/common";
+import { CommonModule } from '@angular/common';
 
 @NgModule({
   declarations: [

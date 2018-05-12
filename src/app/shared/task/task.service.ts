@@ -5,7 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { TaskTransferable } from './task.transferable';
 import { map } from 'rxjs/internal/operators';
-import {Observable, Subject} from "rxjs";
+import { Observable, Subject } from 'rxjs';
 
 const TASKS: Task[] = [
   {

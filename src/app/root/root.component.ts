@@ -5,7 +5,6 @@ import { Component } from '@angular/core';
   template: `
     <router-outlet></router-outlet>
     <app-messages></app-messages>
-  `,
+  `
 })
-export class RootComponent {
-}
+export class RootComponent {}

@@ -4,7 +4,7 @@ import { OverviewComponent } from '../overview/overview.component';
 import { AccountComponent } from '../account/account.component';
 import { AuthGuard } from '../shared/authentication/auth-guard.service';
 import { AdminComponent } from '../admin/admin.component';
-import {AppComponent} from "./app.component";
+import { AppComponent } from './app.component';
 
 const routes: Routes = [
   {
@@ -15,9 +15,9 @@ const routes: Routes = [
       { path: 'overview', component: OverviewComponent },
       { path: 'account', component: AccountComponent },
       { path: 'admin', component: AdminComponent },
-      { path: '', redirectTo: 'overview', pathMatch: 'full' },
+      { path: '', redirectTo: 'overview', pathMatch: 'full' }
     ]
-  },
+  }
 ];
 
 @NgModule({
