@@ -1,8 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Task } from '../shared/task/task';
-import { LOADING_MODE, LoadingEvent, TaskService } from '../task.service';
+import { LOADING_MODE, LoadingEvent, TaskService } from '../shared/task/task.service';
 import { TaskDisplayable } from '../shared/task/task.displayable';
-import { MessageService } from '../message.service';
+import { MessageService } from '../shared/message/message.service';
 import { SchedulePopupComponent } from '../schedule-popup/schedule-popup.component';
 import { isNullOrUndefined } from 'util';
 

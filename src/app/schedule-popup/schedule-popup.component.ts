@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { TaskDisplayable } from '../shared/task/task.displayable';
-import { TaskService } from '../task.service';
+import { TaskService } from '../shared/task/task.service';
 
 @Component({
   selector: 'app-schedule-popup',

@@ -7,10 +7,10 @@ import { AuthenticationService } from '../shared/authentication/authentication.s
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  user: string = '';
-  password: string = '';
-  isLoading: boolean = false;
-  showForm: number = 0;
+  user = '';
+  password = '';
+  isLoading = false;
+  showForm = 0;
 
   constructor(private authService: AuthenticationService) {}
 

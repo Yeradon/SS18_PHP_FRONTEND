@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { MessageService } from '../../message.service';
+import { MessageService } from '../message/message.service';
 
 @Injectable()
 export class AuthenticationService {
@@ -22,6 +22,6 @@ export class AuthenticationService {
 
   logout() {
     this._isLoggedIn = false;
-    this.router.navigate(['']);
+    this.router.navigate(['login']);
   }
 }

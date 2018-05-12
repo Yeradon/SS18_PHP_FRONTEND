@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { User } from './shared/user/user';
+import { User } from './user';
 
 const USER: User = {
   id: '0',

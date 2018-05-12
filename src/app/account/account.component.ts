@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from '../shared/user/user';
-import { UserService } from '../user.service';
+import { UserService } from '../shared/user/user.service';
 
 const TEXT_CHANGE_PASSWD: string = 'Passwort ändern';
 const TEXT_DELETE_ACCOUNT: string = 'Konto löschen';

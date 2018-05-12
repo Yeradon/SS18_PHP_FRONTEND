@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
-import { Task } from './shared/task/task';
-import { BehaviorSubject, Observable, Subject } from 'rxjs/Rx';
+import { Task } from './task';
 import { isNullOrUndefined } from 'util';
 import { HttpClient } from '@angular/common/http';
-import { environment } from '../environments/environment';
-import { TaskTransferable } from './shared/task/task.transferable';
+import { environment } from '../../../environments/environment';
+import { TaskTransferable } from './task.transferable';
 import { map } from 'rxjs/internal/operators';
+import {Observable, Subject} from "rxjs";
 
 const TASKS: Task[] = [
   {
