@@ -69,12 +69,6 @@ export class OverviewComponent implements OnInit {
       console.log(task);
       if (!isNullOrUndefined(task)) {
         task.isTranslated = false;
-        this.messageService.add(
-          (event.mode == LOADING_MODE.STARTED ? 'Starte' : 'Stoppe') +
-            ' Laden von ' +
-            task.text +
-            '.'
-        );
         task.isLoading = event.mode == LOADING_MODE.STARTED ? true : false;
       }
     });
