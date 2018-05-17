@@ -3,27 +3,30 @@ import {
   HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HttpErrorResponse, HttpResponse
 } from '@angular/common/http';
 
-import { Observable } from 'rxjs/Observable';
 import {AuthenticationService} from "./authentication.service";
-import {catchError, throwError} from "rxjs/operators";
+import {catchError} from "rxjs/operators";
+import {throwError} from 'rxjs';
 import {ErrorObservable} from "rxjs-compat/observable/ErrorObservable";
+import { Observable } from 'rxjs/Rx';
+import { MessageService } from '../message/message.service';
 
 @Injectable()
 export class AuthenticationInterceptor implements HttpInterceptor {
-  constructor(private auth: AuthenticationService) {}
+  constructor(private auth: AuthenticationService, private message: MessageService) {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     if(this.auth.isLoggedIn) {
       const newReq = req.clone({
         headers: req.headers.set('Authentication', this.auth.getToken())
       });
-      return next.handle(newReq).pipe(catchError((err, caught) => {
+      return next.handle(newReq).pipe(catchError((err: HttpEvent<any>, caught) => {
         if(err instanceof HttpErrorResponse) {
           if(err.status == 401) {
             this.auth.logout();
+            this.message.add("Deine Session ist abgelaufen");
           }
+          return throwError(err);
         }
-        return throwError(err);
       }));
     }
     return next.handle(req);
