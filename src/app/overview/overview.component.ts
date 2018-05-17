@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { Task } from '../shared/task/task';
 import {
   LOADING_MODE,
@@ -15,7 +15,7 @@ import { isNullOrUndefined } from 'util';
   templateUrl: './overview.component.html',
   styleUrls: ['./overview.component.css']
 })
-export class OverviewComponent implements OnInit {
+export class OverviewComponent implements AfterViewInit {
   tasks_urgent: TaskDisplayable[] = [];
   tasks_scheduled: TaskDisplayable[] = [];
   tasks_unscheduled: TaskDisplayable[] = [];
@@ -36,7 +36,7 @@ export class OverviewComponent implements OnInit {
     * - tasks_scheduled: eingeplante Aufgaben
     * - tasks_unscheduled: nicht eingeplante und bereits erledigte Aufgaben
     */
-  ngOnInit() {
+  ngAfterViewInit() {
     this.taskService.syncTasks().then(
       () => {
         this.tasks_unscheduled = [];

@@ -28,18 +28,16 @@ export class AuthenticationInterceptor implements HttpInterceptor {
       return next
         .handle(newReq)
         .pipe(
-          
-        catchError((err: HttpEvent<any>, caught) => {
-              if  (err instanceof HttpErrorResponse) {
-                if  (err.status == 401) {
-                  this.auth.logout();
-                  this.message.add('Deine Session ist abgelaufen');
-                }
-                return throwError(err);
-          }
-            })
-          )
-        ;
+          catchError((err: HttpEvent<any>, caught) => {
+            if (err instanceof HttpErrorResponse) {
+              if (err.status == 401) {
+                this.auth.logout();
+                this.message.add('Deine Session ist abgelaufen');
+              }
+              return throwError(err);
+            }
+          })
+        );
     }
     return next.handle(req);
   }
