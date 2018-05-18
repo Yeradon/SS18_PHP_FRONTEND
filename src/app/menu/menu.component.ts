@@ -23,7 +23,7 @@ export class MenuComponent implements OnInit {
     this.showNav = false;
   }
 
-  private navigateTo(x: string): void {
+  public navigateTo(x: string): void {
     this.router.navigate([x]);
     this.showNav = false;
   }

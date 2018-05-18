@@ -13,7 +13,7 @@ export class AppComponent {
   showNav = false;
 
   @ViewChild(MenuComponent)
-  private menu: MenuComponent;
+  public menu: MenuComponent;
 
   constructor(public taskService: TaskService) {}
 
