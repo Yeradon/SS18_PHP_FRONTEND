@@ -11,6 +11,7 @@ import { SchedulePopupComponent } from '../schedule-popup/schedule-popup.compone
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
+import { TaskSchedulePipe } from '../shared/task/task-schedule.pipe';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { CommonModule } from '@angular/common';
     MenuComponent,
     AccountComponent,
     AdminComponent,
-    SchedulePopupComponent
+    SchedulePopupComponent,
+    TaskSchedulePipe,
   ],
   imports: [CommonModule, AppRoutingModule, FormsModule, HttpClientModule]
 })

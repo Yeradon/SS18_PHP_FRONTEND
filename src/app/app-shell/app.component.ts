@@ -18,9 +18,8 @@ export class AppComponent {
   }
 
   addEmptyTask(): void {
-    let $task = new Task();
-    $task.id = new Date().getTime().toString();
-    $task.userID = '1';
-    this.taskService.addTask($task);
+    let task = new Task();
+    task.text = "";
+    this.taskService.createTask(task);
   }
 }

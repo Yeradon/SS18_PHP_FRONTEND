@@ -1,6 +1,8 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { Task } from '../shared/task/task';
 import {
+  CHANGE_MODE,
+  ChangeEvent,
   LOADING_MODE,
   LoadingEvent,
   TaskService
@@ -9,16 +11,16 @@ import { TaskDisplayable } from '../shared/task/task.displayable';
 import { MessageService } from '../shared/message/message.service';
 import { SchedulePopupComponent } from '../schedule-popup/schedule-popup.component';
 import { isNullOrUndefined } from 'util';
+import { SCHEDULE_STATUS } from '../shared/task/task-schedule.pipe';
 
 @Component({
   selector: 'app-overview',
   templateUrl: './overview.component.html',
-  styleUrls: ['./overview.component.css']
+  styleUrls: ['./overview.component.css'],
 })
 export class OverviewComponent implements AfterViewInit {
-  tasks_urgent: TaskDisplayable[] = [];
-  tasks_scheduled: TaskDisplayable[] = [];
-  tasks_unscheduled: TaskDisplayable[] = [];
+  isLoading = false;
+  tasks: TaskDisplayable[] = [];
 
   task2BeScheduled: TaskDisplayable;
 
@@ -30,6 +32,17 @@ export class OverviewComponent implements AfterViewInit {
     private messageService: MessageService
   ) {}
 
+  private insertNewTask =  (task: Task) => {
+    var task_d: TaskDisplayable = new TaskDisplayable(
+      task.id,
+      task.text,
+      task.done,
+      task.deadline
+    );
+
+    this.tasks.push(task_d);
+  };
+
   /*
     * Lädt Aufgaben und teilt sie auf drei Listen auf:
     * - tasks_urgent: dringende Aufgaben
@@ -37,32 +50,40 @@ export class OverviewComponent implements AfterViewInit {
     * - tasks_unscheduled: nicht eingeplante und bereits erledigte Aufgaben
     */
   ngAfterViewInit() {
-    this.taskService.syncTasks().then(
+    this.isLoading = true;
+    const _prom = this.taskService.syncTasks();
+    _prom.then(
       () => {
-        this.tasks_unscheduled = [];
-        this.tasks_scheduled = [];
-        this.tasks_urgent = [];
-        this.taskService.tasks.forEach((task: Task) => {
-          var task_d: TaskDisplayable = new TaskDisplayable(
-            task.id,
-            task.text,
-            task.done,
-            task.deadline
-          );
-
-          if (!task.deadline || task.done) {
-            this.tasks_unscheduled.push(task_d);
-          } else if (task.deadline < new Date()) {
-            this.tasks_urgent.push(task_d);
-          } else {
-            this.tasks_scheduled.push(task_d);
-          }
-        });
+        this.tasks = [];
+        this.taskService.tasks.forEach(this.insertNewTask);
+        this.isLoading = false;
       },
       err => {
         console.log(err);
+        this.isLoading = false;
       }
     );
+
+
+    this.taskService.changeObservable.subscribe((event: ChangeEvent<Task>) => {
+      switch (event.mode){
+        case CHANGE_MODE.ADDED:
+          this.insertNewTask(event.newVal);
+          break;
+        case CHANGE_MODE.DELETED:
+          var task = this.findDisplayableByTask(event.oldVal);
+          if(!isNullOrUndefined(task)) {
+            this.removeOldTask(task);
+          }
+          break;
+        case CHANGE_MODE.CHANGED:
+          var task = this.findDisplayableByTask(event.oldVal);
+          task.text = event.newVal.text;
+          task.deadline = event.newVal.deadline;
+          task.done = event.newVal.done;
+          break;
+      }
+    });
 
     this.taskService.tasksLoading.subscribe((event: LoadingEvent<Task>) => {
       let task = this.findDisplayableByTask(event.target);
@@ -81,9 +102,7 @@ export class OverviewComponent implements AfterViewInit {
         buffer = _task;
       }
     };
-    this.tasks_urgent.forEach(cmpFunction);
-    this.tasks_scheduled.forEach(cmpFunction);
-    this.tasks_unscheduled.forEach(cmpFunction);
+    this.tasks.forEach(cmpFunction);
     return buffer;
   }
 
@@ -121,6 +140,10 @@ export class OverviewComponent implements AfterViewInit {
     }
   }
 
+
+  private removeOldTask (task: TaskDisplayable) {
+    this.removeElementFromArray(task, this.tasks);
+  }
   /*
    * Entfernt ein Element aus einem Array. Gibt true zurück, wenn das Element
    * im Array vorhanden war und entfernt wurde.

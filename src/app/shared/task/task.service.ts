@@ -88,7 +88,7 @@ export class TaskService {
       return null;
     } else {
       return new Promise<Task>((resolve, reject) => {
-        this.http.put<Task>(environment.BACKEND_URL + '/tasks', task).subscribe(
+        this.http.put<Task>(environment.BACKEND_URL + 'task', task).subscribe(
           (_task: Task) => {
             this.tasks.push(_task);
             this.changeObservable.next(
@@ -122,6 +122,10 @@ export class TaskService {
         task
       );
     }
+
+    $serverCallObservable.subscribe((task) => {
+
+    });
     let oldTask: Task;
     var newTasks = this.tasks.filter((_task: Task) => {
       if (task.id == _task.id) {
@@ -150,7 +154,7 @@ export class TaskService {
     this.tasksLoading.next({ mode: LOADING_MODE.STARTED, target: task });
     return new Promise<boolean>((resolve, reject) => {
       this.http
-        .delete('https://php-testat.herokuapp.com/tasks/' + task.id)
+        .delete(environment.BACKEND_URL + 'task/' + task.id)
         .subscribe(
           res => {
             var newTasks = this.tasks.filter((_task: Task) => {
@@ -182,7 +186,7 @@ export class TaskService {
 
   private parseResult(tasks: Task[]): Task[] {
     tasks.forEach(task => {
-      if (!(task.deadline instanceof Date)) {
+      if (!isNullOrUndefined(task.deadline) && !(task.deadline instanceof Date)) {
         task.deadline = new Date(task.deadline);
       }
     });
