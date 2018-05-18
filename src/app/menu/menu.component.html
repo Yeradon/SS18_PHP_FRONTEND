@@ -6,13 +6,13 @@
       </p>
       <h1>Max Mustermann</h1>
     </ul>
-    <ul class="clickable flex" routerLink="/overview">
+    <ul class="clickable flex" (click)="navigateTo('/overview')">
       Meine Übersicht
     </ul>
-    <ul class="clickable flex" routerLink="/account">
+    <ul class="clickable flex" (click)="navigateTo('/account')">
       Mein Konto
     </ul>
-    <ul class="clickable flex" routerLink="/admin">
+    <ul class="clickable flex" (click)="navigateTo('/admin')">
       Administrator-Bereich
     </ul>
     <ul class="clickable flex" (click)="logout()">

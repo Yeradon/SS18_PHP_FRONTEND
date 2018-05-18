@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { TaskService } from '../shared/task/task.service';
 import { Task } from '../shared/task/task';
+import { MenuComponent } from '../menu/menu.component';
 
 @Component({
   selector: 'app-root',
@@ -11,10 +12,13 @@ export class AppComponent {
   title = 'app';
   showNav = false;
 
+  @ViewChild(MenuComponent)
+  private menu: MenuComponent;
+
   constructor(public taskService: TaskService) {}
 
   toggleMenu(): void {
-    this.showNav = !this.showNav;
+    this.menu.showNav = !this.menu.showNav;
   }
 
   addEmptyTask(): void {

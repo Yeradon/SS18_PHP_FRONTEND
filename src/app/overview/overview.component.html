@@ -1,14 +1,21 @@
 <section>
   <h1>Meine Übersicht</h1>
+  <div class="task-label" *ngIf="isLoading">
+    <div class="loading">
+      <div class="loader_0"></div>
+      <div class="loader_1"></div>
+    </div>
+    <label>Lade Daten...</label>
+  </div>
   <!-- DARSTELLUNG DER LISTE tasks_urgent -->
-  <div class="task-label" *ngIf="(tasks| taskSchedule:1).length">
+  <div class="task-label" *ngIf="(tasks | taskSchedule:1).length">
     <img src="assets/img/ic_schedule_red_48px.svg" height="20px" />
     <label class="red">DRINGEND</label>
   </div>
   <div class="translateable" *ngFor="let t of (tasks| taskSchedule:1)">
     <div class="translateable-info" [class.translated]="t.isTranslated">
       <span class="task-checkbox" *ngIf="!t.isLoading">
-        <input type="checkbox" [(ngModel)]="t.done"/>
+        <input type="checkbox" [(ngModel)]="t.done" (change)="updateTask(t)" />
         <img class="checkbox checked" src="assets/img/ic_check_box_white_24px.svg" height="30px"/>
         <img class="checkbox unchecked" src="assets/img/ic_check_box_outline_blank_white_24px.svg" height="30px"/>
       </span>
@@ -17,7 +24,7 @@
         <div class="loader_1"></div>
       </div>
       <span class="task-title">
-        <input type="text" [(ngModel)]="t.text"  />
+        <input type="text" [(ngModel)]="t.text" (focusout)="updateTask(t)"/>
       </span>
       <span class="task-scheduling red">{{t.generateDisplayableDeadline()}}</span>
       <img class="clickable options" src="assets/img/ic_more_vert_white_48px.svg" height="30px" (click)="t.toggleTranslation()"/>
@@ -36,7 +43,7 @@
   <div class="translateable" *ngFor="let t of (tasks | taskSchedule:2)">
     <div class="translateable-info" [class.translated]="t.isTranslated">
       <span class="task-checkbox" *ngIf="!t.isLoading">
-        <input type="checkbox" [(ngModel)]="t.done"/>
+        <input type="checkbox" [(ngModel)]="t.done" (change)="updateTask(t)" />
         <img class="checkbox checked" src="assets/img/ic_check_box_white_24px.svg" height="30px"/>
         <img class="checkbox unchecked" src="assets/img/ic_check_box_outline_blank_white_24px.svg" height="30px"/>
       </span>
@@ -45,7 +52,7 @@
         <div class="loader_1"></div>
       </div>
       <span class="task-title">
-        <input type="text" [(ngModel)]="t.text"  />
+        <input type="text" [(ngModel)]="t.text" (focusout)="updateTask(t)" />
       </span>
       <span class="task-scheduling">{{t.generateDisplayableDeadline()}}</span>
       <img class="clickable options" src="assets/img/ic_more_vert_white_48px.svg" height="30px" (click)="t.toggleTranslation()"/>
@@ -57,14 +64,14 @@
     </div>
   </div>
   <!-- DARSTELLUNG DER LISTE tasks_unscheduled -->
-  <div class="task-label">
+  <div class="task-label" *ngIf="(tasks | taskSchedule:3).length">
     <img src="assets/img/ic_list_white_48px.svg" height="20px" />
     <label class="">ALLE AUFGABEN</label>
   </div>
   <div class="translateable" *ngFor="let t of (tasks | taskSchedule:3)">
     <div class="translateable-info" [class.translated]="t.isTranslated">
       <span class="task-checkbox" *ngIf="!t.isLoading">
-        <input type="checkbox" [(ngModel)]="t.done"/>
+        <input type="checkbox" [(ngModel)]="t.done" (change)="updateTask(t)" />
         <img class="checkbox checked" src="assets/img/ic_check_box_white_24px.svg" height="30px"/>
         <img class="checkbox unchecked" src="assets/img/ic_check_box_outline_blank_white_24px.svg" height="30px"/>
       </span>
@@ -73,7 +80,7 @@
         <div class="loader_1"></div>
       </div>
       <span class="task-title">
-        <input type="text" [(ngModel)]="t.text" />
+        <input type="text" [(ngModel)]="t.text" (focusout)="updateTask(t)" />
       </span>
       <span class="task-scheduling">{{t.generateDisplayableDeadline()}}</span>
       <img class="clickable options" src="assets/img/ic_more_vert_white_48px.svg" height="30px" (click)="t.toggleTranslation()"/>
@@ -83,6 +90,9 @@
       <img class="clickable schedule" [class.disabled]="t.isLoading" src="assets/img/ic_schedule_white_48px.svg" height="30px" (click)="scheduleTask(t)" />
       <img class="clickable de-schedule" [class.disabled]="t.isLoading" src="assets/img/ic_restore_white_48px.svg" height="30px" (click)="descheduleTask(t)" />
     </div>
+  </div>
+  <div class="task-label" *ngIf="!tasks.length">
+    Alles erledigt? Du hast aktuell keine Aufgaben.
   </div>
 </section>
 <app-schedule-popup [task]="task2BeScheduled"></app-schedule-popup>

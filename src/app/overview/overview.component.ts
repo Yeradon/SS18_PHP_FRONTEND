@@ -144,6 +144,18 @@ export class OverviewComponent implements AfterViewInit {
 
   }
 
+  public async updateTask(task: TaskDisplayable) {
+
+    if (!task.isLoading) {
+      try {
+        await this.taskService.addTask(task);
+      } catch(err) {
+        this.messageService.add('Fehler beim Aktualisieren der Aufgabe \'' + task.text + '\' (' + err.message + ')');
+      }
+    }
+
+  }
+
   private removeOldTask(task: TaskDisplayable) {
     this.removeElementFromArray(task, this.tasks);
   }

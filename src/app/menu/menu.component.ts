@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { AuthenticationService } from '../shared/authentication/authentication.service';
 
 @Component({
@@ -7,11 +8,23 @@ import { AuthenticationService } from '../shared/authentication/authentication.s
   styleUrls: ['./menu.component.css']
 })
 export class MenuComponent implements OnInit {
-  constructor(private authService: AuthenticationService) {}
+
+  public showNav = false;
+
+  constructor(
+    private authService: AuthenticationService,
+    private router: Router
+  ) {}
 
   ngOnInit() {}
 
   logout() {
     this.authService.logout();
+    this.showNav = false;
+  }
+
+  private navigateTo(x: string): void {
+    this.router.navigate([x]);
+    this.showNav = false;
   }
 }
