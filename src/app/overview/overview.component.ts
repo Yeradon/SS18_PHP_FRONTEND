@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { Task } from '../shared/task/task';
 import {
   CHANGE_MODE,
@@ -16,7 +16,7 @@ import { SCHEDULE_STATUS } from '../shared/task/task-schedule.pipe';
 @Component({
   selector: 'app-overview',
   templateUrl: './overview.component.html',
-  styleUrls: ['./overview.component.css']
+  styleUrls: ['./overview.component.css'],
 })
 export class OverviewComponent implements AfterViewInit {
   isLoading = false;
@@ -68,16 +68,17 @@ export class OverviewComponent implements AfterViewInit {
             this.insertNewTask(event.newVal);
             break;
           case CHANGE_MODE.DELETED:
-            var task = this.findDisplayableByTask(event.oldVal);
+            let task = this.findDisplayableByTask(event.oldVal);
             if     (!isNullOrUndefined(task)) {
               this.removeOldTask(task);
             }
             break;
           case CHANGE_MODE.CHANGED:
-            var task = this.findDisplayableByTask(event.oldVal);
-            task.text = event.newVal.text;
-            task.deadline = event.newVal.deadline;
-            task.done = event.newVal.done;
+            let _task = event.newVal;
+            let task_d = this.findDisplayableByTask(event.oldVal)
+            task_d.text = _task.text;
+            task_d.deadline = _task.deadline;
+            task_d.done = _task.done;
             break;
         }
       }

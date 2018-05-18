@@ -90,6 +90,7 @@ export class TaskService {
       return new Promise<Task>((resolve, reject) => {
         this.http
           .put<Task>(environment.BACKEND_URL + 'task', task)
+          .pipe(map(this.parseSingleResult))
           .subscribe(
             (_task: Task) => {
               this.tasks.push(_task);
@@ -113,9 +114,10 @@ export class TaskService {
    */
   public async modifyTask(task: Task) {
     return new Promise<Task>((resolve, reject) => {
-      this.http.post<Task>(
-        environment.BACKEND_URL + 'task/' + task.id, task
-      ).subscribe((newTask: Task) => {
+      this.http
+        .post<Task>(environment.BACKEND_URL + 'task/' + task.id, task)
+        .pipe(map(this.parseSingleResult))
+        .subscribe((newTask: Task) => {
         const index = this.tasks.indexOf(task);
         this.tasks[index] = newTask;
         this.changeObservable.next(new ChangeEvent<Task>(CHANGE_MODE.CHANGED, task, newTask));
@@ -168,12 +170,19 @@ export class TaskService {
     });
   }
 
+  private parseSingleResult(task: Task): Task {
+    if (!isNullOrUndefined(task.deadline) && !(task.deadline instanceof Date)) {
+      task.deadline = new Date(task.deadline);
+    }
+    return task;
+  }
   private parseResult(tasks: Task[]): Task[] {
     tasks.forEach(task => {
       if (!isNullOrUndefined(task.deadline) && !(task.deadline instanceof Date)) {
         task.deadline = new Date(task.deadline);
       }
     });
+    console.log(tasks);
     return tasks;
   }
 }
