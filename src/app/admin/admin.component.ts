@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { AdminPopupComponent } from '../admin-popup/admin-popup.component';
 import { UserService } from '../shared/user/user.service';
 import { User } from '../shared/user/user';
 import { UserDisplayable } from '../shared/user/user.displayable';
@@ -13,13 +14,22 @@ export class AdminComponent implements OnInit {
   public hiddenAdmins: number;
   public users: UserDisplayable[];
   public admins: UserDisplayable[];
+  public user: User;
   public filter: string;
 
-  constructor(private userService: UserService) {}
+  public user2BeDeleted: User;
+
+  @ViewChild(AdminPopupComponent)
+  private adminPopup: AdminPopupComponent;
+
+  constructor(
+    private userService: UserService
+  ) { }
 
   ngOnInit() {
     var usersLoaded: User[] = this.userService.loadUsers();
     var adminsLoaded: User[] = this.userService.loadAdmins();
+    this.user = this.userService.loadUser();
 
     this.users = this.generateDisplayableUsers(usersLoaded);
     this.admins = this.generateDisplayableUsers(adminsLoaded);
@@ -34,6 +44,13 @@ export class AdminComponent implements OnInit {
     this.filter = '';
     this.hiddenUsers = this.filterList(this.users, this.filter);
     this.hiddenAdmins = this.filterList(this.admins, this.filter);
+  }
+
+  public deleteUser(user: UserDisplayable) {
+
+    this.user2BeDeleted = user;
+    this.adminPopup.show();
+
   }
 
   private filterList(list: UserDisplayable[], filter: string): number {

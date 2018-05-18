@@ -22,6 +22,10 @@
   background-color: #2E4172;
 }
 
+.clickable.disabled {
+    background-color: #dadada !important;
+}
+
 /*
  * Abwandlung globaler Klassen
  */

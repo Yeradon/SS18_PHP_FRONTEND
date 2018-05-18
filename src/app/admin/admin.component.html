@@ -13,8 +13,8 @@
         <img class="clickable options" src="assets/img/ic_more_vert_white_48px.svg" height="30px" (click)="u.toggleTranslation()"/>
       </div>
       <div class="translateable-options">
-        <img class="clickable delete" src="assets/img/ic_delete_forever_white_48px.svg" height="30px" />
-        <img class="clickable change-role" src="assets/img/ic_person_outline_white_48px.svg" height="30px" />
+        <img class="clickable delete" [class.disabled]="u.id==user.id" (click)="deleteUser(u)" src="assets/img/ic_delete_forever_white_48px.svg" height="30px" />
+        <img class="clickable change-role" [class.disabled]="u.id==user.id" src="assets/img/ic_person_outline_white_48px.svg" height="30px" />
       </div>
     </div>
   </div>
@@ -33,7 +33,7 @@
         <img class="clickable options" src="assets/img/ic_more_vert_white_48px.svg" height="30px" (click)="u.toggleTranslation()"/>
       </div>
       <div class="translateable-options">
-        <img class="clickable delete" src="assets/img/ic_delete_forever_white_48px.svg" height="30px" />
+        <img class="clickable delete" (click)="deleteUser(u)" src="assets/img/ic_delete_forever_white_48px.svg" height="30px" />
         <img class="clickable change-role" src="assets/img/ic_person_white_48px.svg" height="30px" />
       </div>
     </div>
@@ -42,3 +42,4 @@
     <label >{{hiddenUsers}} EINTRÄGE SIND AKTUELL AUSGEBLENDET. <span style="text-decoration: underline;" (click)="filter_onReset()">ALLE ANZEIGEN</span></label>
   </div>
 </section>
+<app-admin-popup [user]="user2BeDeleted"></app-admin-popup>

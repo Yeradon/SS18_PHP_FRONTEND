@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { MessageService } from '../message/message.service';
 import { User } from './user';
 
 const USER: User = {
@@ -77,7 +78,7 @@ const USERS: User[] = [
   providedIn: 'root'
 })
 export class UserService {
-  constructor() {}
+  constructor( private messageService: MessageService) {}
 
   public loadUser(): User {
     return USER;
@@ -89,5 +90,9 @@ export class UserService {
 
   public loadAdmins(): User[] {
     return ADMINS;
+  }
+
+  public deleteUser(user: User) {
+    this.messageService.add("Hat dir keiner gesagt, dass die User noch hard-coded sind?");
   }
 }

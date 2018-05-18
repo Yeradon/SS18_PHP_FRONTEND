@@ -7,6 +7,7 @@ import { OverviewComponent } from '../overview/overview.component';
 import { MenuComponent } from '../menu/menu.component';
 import { AccountComponent } from '../account/account.component';
 import { AdminComponent } from '../admin/admin.component';
+import { AdminPopupComponent } from '../admin-popup/admin-popup.component';
 import { SchedulePopupComponent } from '../schedule-popup/schedule-popup.component';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';

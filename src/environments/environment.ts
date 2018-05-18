@@ -5,7 +5,7 @@
 
 export const environment = {
   production: false,
-  BACKEND_URL: 'http://localhost/'
+  BACKEND_URL: 'https://php-testat.herokuapp.com/'
 };
 
 /*

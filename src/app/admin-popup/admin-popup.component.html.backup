@@ -1,0 +1,10 @@
+<div class="background" [class.no-display]="noDisplay">
+  <h1 *ngIf="user">Benutzer löschen</h1>
+  <div class="popup" *ngIf="user">
+      <p>Bist du sicher, dass du diesen Benutzer löschen möchtest?</p>
+      <p>Benutzername: {{user.username}}</p>
+      <p>Besitzer: {{user.name}} {{user.surname}}</p>
+      <input type="button" value="Benutzer unwiderruflich löschen" (click)="delete()" />
+      <input type="button" value="Abbrechen" (click)="hide()" />
+  </div>
+</div>

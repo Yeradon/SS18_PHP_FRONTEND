@@ -108,8 +108,12 @@ export class OverviewComponent implements AfterViewInit {
    * Zeigt eine Bildschirmmaske an, um die Terminierung einer Aufgabe zu ändern
    */
   public scheduleTask(task: TaskDisplayable): void {
-    this.task2BeScheduled = task;
-    this.schedulePopup.show();
+
+    if (!task.isLoading) {
+      this.task2BeScheduled = task;
+      this.schedulePopup.show();
+    }
+
   }
 
   /*
@@ -117,25 +121,27 @@ export class OverviewComponent implements AfterViewInit {
    * tasks_unscheduled hinzu
    */
   public descheduleTask(task: TaskDisplayable): void {
-    task.deadline = null;
-    this.taskService.addTask(task);
+
+    if (!task.isLoading) {
+      task.deadline = null;
+      this.taskService.addTask(task);
+    }
+
   }
 
   /*
    * Entfernt eine Aufgabe.
    */
   public async removeTask(task: TaskDisplayable) {
-    try {
-      await this.taskService.removeTask(task);
-    } catch (err) {
-      this.messageService.add(
-        "Fehler beim Löschen der Aufgabe '" +
-          task.text +
-          "' (" +
-          err.message +
-          ')'
-      );
+
+    if (!task.isLoading) {
+      try {
+        await this.taskService.removeTask(task);
+      } catch(err) {
+        this.messageService.add('Fehler beim Löschen der Aufgabe \'' + task.text + '\' (' + err.message + ')');
+      }
     }
+
   }
 
   private removeOldTask(task: TaskDisplayable) {
