@@ -2,7 +2,7 @@
   <div class="msg show" *ngFor='let message of messageService.messages'>
     <div class="flex">
       <h1>INFO</h1>
-      <h1 class="clickable" (click)="messageService.clear()">X</h1>
+      <h1 class="clickable" (click)="messageService.remove(message)">X</h1>
     </div>
     <p >
       {{message.content}}

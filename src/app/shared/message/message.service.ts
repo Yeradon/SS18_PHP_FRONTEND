@@ -34,6 +34,13 @@ export class MessageService {
     }, MessageService.DEFAULT_HIDE_TIME + 1);
   }
 
+  public remove(msg: Message): void {
+    var i = this.messages.indexOf(msg);
+    if (i > -1) {
+      this.messages.splice(i,1);
+    }
+  }
+
   clear() {
     this.messages = [];
   }
