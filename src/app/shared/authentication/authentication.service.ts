@@ -16,24 +16,40 @@ export class AuthenticationService {
   constructor(private router: Router, private messageService: MessageService, private http: HttpClient) {}
 
   login(user: string, password: string) {
-    this.http.post<any[]>(environment.BACKEND_URL + 'login',{username: user, password: password}, ).subscribe( (res) => {
-      localStorage.setItem('user', res[0]);
-      localStorage.setItem('auth', res[1]);
-      this._isLoggedIn = true;
-      this.router.navigate(['']);
-    }, (err) => {
-      if(err instanceof HttpErrorResponse) {
-        if(err.status >= 500) {
-          this.messageService.add("Der Service ist momentan nicht verfügbar!");
-        } else {
-          if(err.status == 403) {
-            this.messageService.add("Nutzername oder Passwort inkorrekt");
-          } else {
-            this.messageService.add("Fehler beim Login: " + err.message);
+    this.http
+      .post<any[]>(environment.BACKEND_URL + 'login', {
+        username: user,
+        password: password
+      })
+      .subscribe(
+        res => {
+          localStorage.setItem('user', JSON.stringify(res[0]));
+          console.log(res);
+
+          localStorage.setItem('auth', res[1].token);
+          this._isLoggedIn = true;
+          this.router.navigate(['']);
+        },
+        err => {
+          if (err instanceof HttpErrorResponse) {
+            if (err.status >= 500) {
+              this.messageService.add(
+                'Der Service ist momentan nicht verfügbar!'
+              );
+            } else {
+              if (err.status == 403) {
+                this.messageService.add(
+                  'Nutzername oder Passwort inkorrekt'
+                );
+              } else {
+                this.messageService.add(
+                  'Fehler beim Login: ' + err.message
+                );
+              }
+            }
           }
         }
-      }
-    });
+      );
   }
 
   getToken(): string {
