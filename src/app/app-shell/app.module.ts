@@ -21,7 +21,7 @@ import { TaskSchedulePipe } from '../shared/task/task-schedule.pipe';
     AccountComponent,
     AdminComponent,
     SchedulePopupComponent,
-    TaskSchedulePipe,
+    TaskSchedulePipe
   ],
   imports: [CommonModule, AppRoutingModule, FormsModule, HttpClientModule]
 })

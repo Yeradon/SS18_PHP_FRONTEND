@@ -16,7 +16,7 @@ import { SCHEDULE_STATUS } from '../shared/task/task-schedule.pipe';
 @Component({
   selector: 'app-overview',
   templateUrl: './overview.component.html',
-  styleUrls: ['./overview.component.css'],
+  styleUrls: ['./overview.component.css']
 })
 export class OverviewComponent implements AfterViewInit {
   isLoading = false;
@@ -32,7 +32,7 @@ export class OverviewComponent implements AfterViewInit {
     private messageService: MessageService
   ) {}
 
-  private insertNewTask =  (task: Task) => {
+  private insertNewTask = (task: Task) => {
     var task_d: TaskDisplayable = new TaskDisplayable(
       task.id,
       task.text,
@@ -52,38 +52,36 @@ export class OverviewComponent implements AfterViewInit {
   ngAfterViewInit() {
     this.isLoading = true;
     const _prom = this.taskService.syncTasks();
-    _prom.then(
-      () => {
+    _prom.then(() => {
         this.tasks = [];
         this.taskService.tasks.forEach(this.insertNewTask);
         this.isLoading = false;
-      },
-      err => {
+      }, err => {
         console.log(err);
         this.isLoading = false;
+      });
+
+    this.taskService.changeObservable.subscribe(
+      (event: ChangeEvent<Task>) => {
+        switch (event.mode)       {
+        case CHANGE_MODE.ADDED:
+            this.insertNewTask(event.newVal);
+            break;
+          case CHANGE_MODE.DELETED:
+            var task = this.findDisplayableByTask(event.oldVal);
+            if     (!isNullOrUndefined(task)) {
+              this.removeOldTask(task);
+            }
+            break;
+          case CHANGE_MODE.CHANGED:
+            var task = this.findDisplayableByTask(event.oldVal);
+            task.text = event.newVal.text;
+            task.deadline = event.newVal.deadline;
+            task.done = event.newVal.done;
+            break;
+        }
       }
     );
-
-
-    this.taskService.changeObservable.subscribe((event: ChangeEvent<Task>) => {
-      switch (event.mode){
-        case CHANGE_MODE.ADDED:
-          this.insertNewTask(event.newVal);
-          break;
-        case CHANGE_MODE.DELETED:
-          var task = this.findDisplayableByTask(event.oldVal);
-          if(!isNullOrUndefined(task)) {
-            this.removeOldTask(task);
-          }
-          break;
-        case CHANGE_MODE.CHANGED:
-          var task = this.findDisplayableByTask(event.oldVal);
-          task.text = event.newVal.text;
-          task.deadline = event.newVal.deadline;
-          task.done = event.newVal.done;
-          break;
-      }
-    });
 
     this.taskService.tasksLoading.subscribe((event: LoadingEvent<Task>) => {
       let task = this.findDisplayableByTask(event.target);
@@ -140,8 +138,7 @@ export class OverviewComponent implements AfterViewInit {
     }
   }
 
-
-  private removeOldTask (task: TaskDisplayable) {
+  private removeOldTask(task: TaskDisplayable) {
     this.removeElementFromArray(task, this.tasks);
   }
   /*

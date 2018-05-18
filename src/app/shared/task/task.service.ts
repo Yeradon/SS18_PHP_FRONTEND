@@ -88,18 +88,20 @@ export class TaskService {
       return null;
     } else {
       return new Promise<Task>((resolve, reject) => {
-        this.http.put<Task>(environment.BACKEND_URL + 'task', task).subscribe(
-          (_task: Task) => {
-            this.tasks.push(_task);
-            this.changeObservable.next(
-              new ChangeEvent<Task>(CHANGE_MODE.ADDED, null, _task)
-            );
-            resolve(_task);
-          },
-          err => {
-            reject(err);
-          }
-        );
+        this.http
+          .put<Task>(environment.BACKEND_URL + 'task', task)
+          .subscribe(
+            (_task: Task) => {
+              this.tasks.push(_task);
+              this.changeObservable.next(
+                new ChangeEvent<Task>(CHANGE_MODE.ADDED, null, _task)
+              );
+              resolve(_task);
+            },
+            err => {
+              reject(err);
+            }
+          );
       });
     }
   }
@@ -123,9 +125,7 @@ export class TaskService {
       );
     }
 
-    $serverCallObservable.subscribe((task) => {
-
-    });
+    $serverCallObservable.subscribe(task => {});
     let oldTask: Task;
     var newTasks = this.tasks.filter((_task: Task) => {
       if (task.id == _task.id) {

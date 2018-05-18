@@ -19,7 +19,7 @@ export class AppComponent {
 
   addEmptyTask(): void {
     let task = new Task();
-    task.text = "";
+    task.text = '';
     this.taskService.createTask(task);
   }
 }
