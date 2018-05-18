@@ -16,8 +16,9 @@ export class AuthenticationService {
   constructor(private router: Router, private messageService: MessageService, private http: HttpClient) {}
 
   login(user: string, password: string) {
-    this.http.post(environment.BACKEND_URL + 'login',{username: user, password: password}, {responseType: "text"}).subscribe( (res: string) => {
-      localStorage.setItem('auth', res);
+    this.http.post<any[]>(environment.BACKEND_URL + 'login',{username: user, password: password}, ).subscribe( (res) => {
+      localStorage.setItem('user', res[0]);
+      localStorage.setItem('auth', res[1]);
       this._isLoggedIn = true;
       this.router.navigate(['']);
     }, (err) => {
@@ -41,6 +42,7 @@ export class AuthenticationService {
 
   logout() {
     localStorage.removeItem('auth');
+    localStorage.removeItem('user');
     this.router.navigate(['login']);
   }
 }
