@@ -45,6 +45,7 @@
   margin: 0;
   padding: 5px 10px;
   box-sizing: border-box;
+  border-bottom: 1px solid #bababa;
 }
 
 .task-label label {
@@ -105,6 +106,10 @@
 
 .schedule:hover, .de-schedule:hover { /* Button mit blauem Hintergrund */
   background-color: #2E4172;
+}
+
+.no-border {
+  border: none !important;
 }
 
 /*

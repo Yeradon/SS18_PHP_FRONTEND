@@ -153,7 +153,6 @@ input[type="submit"]:hover {
   box-sizing: border-box;
   background-color: white;
   box-sizing: border-box;
-  border-top: 1px solid #bababa;
   border-bottom: 1px solid #bababa;
   transition: .2s ease;
 }
@@ -247,7 +246,6 @@ input[type="submit"]:hover {
      left: 80%;
      width: 20%;
      background-color: white;
-     border-top: 1px solid #bababa;
      border-bottom: 1px solid #bababa;
    }
 

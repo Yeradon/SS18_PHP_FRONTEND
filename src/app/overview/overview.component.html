@@ -1,6 +1,6 @@
 <section>
   <h1>Meine Übersicht</h1>
-  <div class="task-label" *ngIf="isLoading">
+  <div class="task-label no-border" *ngIf="isLoading">
     <div class="loading">
       <div class="loader_0"></div>
       <div class="loader_1"></div>
@@ -91,7 +91,7 @@
       <img class="clickable de-schedule" [class.disabled]="t.isLoading" src="assets/img/ic_restore_white_48px.svg" height="30px" (click)="descheduleTask(t)" />
     </div>
   </div>
-  <div class="task-label" *ngIf="!tasks.length">
+  <div class="task-label no-border" *ngIf="!tasks.length">
     Alles erledigt? Du hast aktuell keine Aufgaben.
   </div>
 </section>
