@@ -111,35 +111,19 @@ export class TaskService {
    * If the collection already contains the task, it will be modified.
    * @param {Task} task
    */
-  public addTask(task: Task) {
-    let $serverCallObservable: Observable<Task>;
-    if (isNullOrUndefined(task.id)) {
-      $serverCallObservable = this.http.put<Task>(
-        environment.BACKEND_URL + 'tasks',
-        task
-      );
-    } else {
-      $serverCallObservable = this.http.post<Task>(
-        environment.BACKEND_URL + 'task/' + task.id,
-        task
-      );
-    }
-
-    $serverCallObservable.subscribe(task => {});
-    let oldTask: Task;
-    var newTasks = this.tasks.filter((_task: Task) => {
-      if (task.id == _task.id) {
-        oldTask = _task;
-        return false;
-      }
-      return true;
+  public async modifyTask(task: Task) {
+    return new Promise<Task>((resolve, reject) => {
+      this.http.post<Task>(
+        environment.BACKEND_URL + 'task/' + task.id, task
+      ).subscribe((newTask: Task) => {
+        const index = this.tasks.indexOf(task);
+        this.tasks[index] = newTask;
+        this.changeObservable.next(new ChangeEvent<Task>(CHANGE_MODE.CHANGED, task, newTask));
+        resolve(newTask);
+      }, (err) => {
+        reject(err);
+      });
     });
-    let mode = !isNullOrUndefined(oldTask)
-      ? CHANGE_MODE.CHANGED
-      : CHANGE_MODE.ADDED;
-    this.changeObservable.next(new ChangeEvent<Task>(mode, oldTask, task));
-    newTasks.push(task);
-    this.tasks = newTasks;
   }
 
   /**
