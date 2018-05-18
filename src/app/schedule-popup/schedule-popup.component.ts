@@ -46,7 +46,7 @@ export class SchedulePopupComponent {
     var isoString = this.date + 'T' + this.time;
     this.task.deadline = new Date(isoString);
 
-    this.taskService.addTask(this.task);
+    this.taskService.modifyTask(this.task);
 
     this.cancel();
   }

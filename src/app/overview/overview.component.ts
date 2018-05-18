@@ -124,7 +124,7 @@ export class OverviewComponent implements AfterViewInit {
 
     if (!task.isLoading) {
       task.deadline = null;
-      this.taskService.addTask(task);
+      this.taskService.modifyTask(task);
     }
 
   }
@@ -148,7 +148,7 @@ export class OverviewComponent implements AfterViewInit {
 
     if (!task.isLoading) {
       try {
-        await this.taskService.addTask(task);
+        await this.taskService.modifyTask(task);
       } catch(err) {
         this.messageService.add('Fehler beim Aktualisieren der Aufgabe \'' + task.text + '\' (' + err.message + ')');
       }
