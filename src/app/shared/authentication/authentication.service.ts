@@ -100,7 +100,7 @@ export class AuthenticationService {
             reject(err);
           }
         );
-    }
+    });
   }
 
   getToken(): string {
