@@ -13,6 +13,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { TaskSchedulePipe } from '../shared/task/task-schedule.pipe';
+import { UserRolePipe } from '../shared/user/user-role.pipe';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { TaskSchedulePipe } from '../shared/task/task-schedule.pipe';
     AdminComponent,
     SchedulePopupComponent,
     AdminPopupComponent,
-    TaskSchedulePipe
+    TaskSchedulePipe,
+    UserRolePipe
   ],
   imports: [CommonModule, AppRoutingModule, FormsModule, HttpClientModule]
 })

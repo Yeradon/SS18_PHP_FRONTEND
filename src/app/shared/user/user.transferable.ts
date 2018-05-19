@@ -1,5 +1,5 @@
 export class UserTransferable {
-  public id: string;
+  public role: string;
   public username: string;
   public name: string;
   public surname: string;

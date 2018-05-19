@@ -21,7 +21,9 @@ export class AccountComponent implements OnInit {
   constructor(private userService: UserService) {}
 
   ngOnInit() {
-    this.user = this.userService.loadUser();
+    this.userService.loadUser().then((user) => {
+      this.user = user;
+    });
   }
 
   toggleChangePassword(): void {

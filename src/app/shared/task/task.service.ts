@@ -113,6 +113,7 @@ export class TaskService {
    * @param {Task} task
    */
   public async modifyTask(task: Task) {
+    console.log(task);
     return new Promise<Task>((resolve, reject) => {
       this.http
         .post<Task>(environment.BACKEND_URL + 'task/' + task.id, task)

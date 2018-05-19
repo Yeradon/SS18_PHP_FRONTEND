@@ -121,13 +121,15 @@ export class OverviewComponent implements AfterViewInit {
    * Entfernt die Terminierung einer Aufgabe und fügt sie anschließend der Liste
    * tasks_unscheduled hinzu
    */
-  public descheduleTask(task: TaskDisplayable): void {
-
+  public async descheduleTask(task: TaskDisplayable) {
     if (!task.isLoading) {
       task.deadline = null;
-      this.taskService.modifyTask(task);
+      try {
+        await this.taskService.modifyTask(task);
+      } catch(err) {
+        this.messageService.add('Fehler beim Verändern der Aufgabe \'' + task.text + '\' (' + err.message + ')');
+      }
     }
-
   }
 
   /*

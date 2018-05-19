@@ -4,17 +4,14 @@ export class UserDisplayable extends User {
   isTranslated: boolean;
   isHidden: boolean;
 
-  /*
-   * Initialisiert eine neue darstellbare Aufgabe
-   */
-  constructor(id: string, username: string, name: string, surname: string) {
+  constructor(username: string, name: string, surname: string, role: string) {
     super();
-    this.id = id;
     this.username = username;
     this.name = name;
     this.surname = surname;
     this.isTranslated = false;
     this.isHidden = false;
+    this.role = role;
   }
 
   /*

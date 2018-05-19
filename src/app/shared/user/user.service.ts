@@ -1,98 +1,56 @@
 import { Injectable } from '@angular/core';
 import { MessageService } from '../message/message.service';
 import { User } from './user';
-
-const USER: User = {
-  id: '0',
-  username: 'test',
-  name: 'Max',
-  surname: 'Mustermann',
-  tasks: null
-};
-
-const ADMINS: User[] = [
-  {
-    id: '0',
-    username: 'test',
-    name: 'Max',
-    surname: 'Mustermann',
-    tasks: null
-  },
-  {
-    id: '1',
-    username: 'admin',
-    name: 'Administrator',
-    surname: '',
-    tasks: null
-  }
-];
-
-const USERS: User[] = [
-  {
-    id: '2',
-    username: 'lskywalker',
-    name: 'Luke',
-    surname: 'Skywalker',
-    tasks: null
-  },
-  { id: '3', username: 'hsolo', name: 'Han', surname: 'Solo', tasks: null },
-  {
-    id: '4',
-    username: 'owkenobi',
-    name: 'Obi Wan',
-    surname: 'Kenobi',
-    tasks: null
-  },
-  { id: '5', username: 'jerso', name: 'Jyn', surname: 'Erso', tasks: null },
-  {
-    id: '6',
-    username: 'pdameron',
-    name: 'Poe',
-    surname: 'Dameron',
-    tasks: null
-  },
-  {
-    id: '7',
-    username: 'lorgana',
-    name: 'Leia',
-    surname: 'Organa',
-    tasks: null
-  },
-  {
-    id: '8',
-    username: 'askywalker',
-    name: 'Anakin',
-    surname: 'Skywalker',
-    tasks: null
-  },
-  {
-    id: '9',
-    username: 'jjbinks',
-    name: 'Jar Jar',
-    surname: 'Binks',
-    tasks: null
-  }
-];
+import { AuthenticationService } from '../authentication/authentication.service';
+import { HttpClient } from '@angular/common/http';
+import { isNullOrUndefined } from 'util';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-  constructor( private messageService: MessageService) {}
 
-  public loadUser(): User {
-    return USER;
+  users: User[];
+  constructor( private messageService: MessageService, private authService: AuthenticationService, private http: HttpClient) {
+
   }
 
-  public loadUsers(): User[] {
-    return USERS;
+  public async loadUser(): Promise<User> {
+    return new Promise<User>((resolve, reject) => {
+      let user = localStorage.getItem('user');
+      if(isNullOrUndefined(user)) {
+        this.http.get<User>(environment.BACKEND_URL + "me").subscribe((user) => {
+          localStorage.setItem('user', JSON.stringify(user))
+          resolve(user);
+        }), (err) => {
+          reject(err);
+        }
+      }
+
+    });
   }
 
-  public loadAdmins(): User[] {
-    return ADMINS;
+  public async loadUsers(): Promise<User[]> {
+    return new Promise<User[]>((resolve, reject) => {
+      if(isNullOrUndefined(this.users)) {
+        this.http.get<User[]>(environment.BACKEND_URL + "user").subscribe((users) => {
+          this.users = users;
+          resolve(users);
+        }), (err) => {
+          reject(err);
+        }
+      } else {
+        return this.users;
+      }
+    });
   }
 
-  public deleteUser(user: User) {
-    this.messageService.add("Hat dir keiner gesagt, dass die User noch hard-coded sind?");
+  public async deleteUser(user: User) {
+    this.http.delete(environment.BACKEND_URL + "user/" + user.username).subscribe(() => {
+      this.users.splice(this.users.indexOf(user), 1);
+    }, (err) => {
+      this.messageService.add("Fehler beim Löschen von " + user.username + ": " + err.message ? err.message : err);
+    })
   }
 }
