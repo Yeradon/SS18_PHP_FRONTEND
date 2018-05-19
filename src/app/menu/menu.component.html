@@ -4,7 +4,7 @@
       <p>
         Hallo
       </p>
-      <h1>Max Mustermann</h1>
+      <h1>{{user.name}} {{user.surname}}</h1>
     </ul>
     <ul class="clickable flex" (click)="navigateTo('/overview')">
       Meine Übersicht
@@ -12,7 +12,7 @@
     <ul class="clickable flex" (click)="navigateTo('/account')">
       Mein Konto
     </ul>
-    <ul class="clickable flex" (click)="navigateTo('/admin')">
+    <ul class="clickable flex" (click)="navigateTo('/admin')" *ngIf="user.role == '1'">
       Administrator-Bereich
     </ul>
     <ul class="clickable flex" (click)="logout()">

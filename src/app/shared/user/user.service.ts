@@ -26,6 +26,8 @@ export class UserService {
         }), (err) => {
           reject(err);
         }
+      } else {
+        resolve(JSON.parse(user));
       }
 
     });

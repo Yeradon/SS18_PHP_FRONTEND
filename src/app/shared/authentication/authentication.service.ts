@@ -23,41 +23,84 @@ export class AuthenticationService {
 
   constructor(private router: Router, private messageService: MessageService, private http: HttpClient) {}
 
-  login(user: string, password: string) {
-    this.http
-      .post<any[]>(environment.BACKEND_URL + 'login', {
-        username: user,
-        password: password
-      })
-      .subscribe(
-        res => {
-          localStorage.setItem('user', JSON.stringify(res[0]));
+  async login(user: string, password: string) {
+    localStorage.removeItem('user');
+    return new Promise<void>((resolve, reject) => {
+      this.http
+        .post<any[]>(environment.BACKEND_URL + 'login', {
+          username: user,
+          password: password
+        })
+        .subscribe(
+          res => {
+            localStorage.setItem('user', JSON.stringify(res[0]));
 
-          localStorage.setItem('auth', res[1].token);
-          this._isLoggedIn = true;
-          this.eventObservable.next(Authentication_EVENTS.LOGIN);
-          this.router.navigate(['']);
-        },
-        err => {
-          if (err instanceof HttpErrorResponse) {
-            if (err.status >= 500) {
-              this.messageService.add(
-                'Der Service ist momentan nicht verfügbar!'
-              );
-            } else {
-              if (err.status == 403) {
+            localStorage.setItem('auth', res[1].token);
+            this._isLoggedIn = true;
+            this.eventObservable.next(Authentication_EVENTS.LOGIN);
+            this.router.navigate(['']);
+            resolve();
+          },
+          err => {
+            if (err instanceof HttpErrorResponse) {
+              if (err.status >= 500) {
                 this.messageService.add(
-                  'Nutzername oder Passwort inkorrekt'
+                  'Der Service ist momentan nicht verfügbar!'
                 );
               } else {
-                this.messageService.add(
-                  'Fehler beim Login: ' + err.message
-                );
+                if (err.status == 403) {
+                  this.messageService.add(
+                    'Nutzername oder Passwort inkorrekt'
+                  );
+                } else {
+                  this.messageService.add(
+                    'Fehler beim Login: ' + err.message
+                  );
+                }
               }
             }
+            reject(err);
           }
-        }
-      );
+        );
+    })
+  }
+
+  register(user: string, name: string, surname: string, passwd: string) {
+    return new Promise<void>((resolve, reject) => {
+      this.http
+        .put<any[]>(environment.BACKEND_URL + 'user', {
+          username: user,
+          password: passwd,
+          name: name,
+          surname: surname
+        })
+        .subscribe(
+          res => {
+            this.login(user, passwd);
+            resolve();
+          },
+          err => {
+            if (err instanceof HttpErrorResponse) {
+              if (err.status >= 500) {
+                this.messageService.add(
+                  'Der Service ist momentan nicht verfügbar!'
+                );
+              } else {
+                if (err.status == 409) {
+                  this.messageService.add(
+                    'Benutzername bereits vorhanden.'
+                  );
+                } else {
+                  this.messageService.add(
+                    'Fehler beim Registrieren: ' + err.message
+                  );
+                }
+              }
+            }
+            reject(err);
+          }
+        );
+    }
   }
 
   getToken(): string {

@@ -45,8 +45,10 @@ export class AdminComponent implements OnInit {
   }
 
   public deleteUser(user: UserDisplayable) {
-    this.user2BeDeleted = user;
-    this.adminPopup.show();
+    if (user.username != this.user.username) {
+      this.user2BeDeleted = user;
+      this.adminPopup.show();
+    }
   }
 
   private filterList(list: UserDisplayable[], filter: string): number {
