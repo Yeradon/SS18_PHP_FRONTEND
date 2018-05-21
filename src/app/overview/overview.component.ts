@@ -85,8 +85,7 @@ export class OverviewComponent implements AfterViewInit {
     );
 
     this.taskService.tasksLoading.subscribe((event: LoadingEvent<Task>) => {
-      let task = this.findDisplayableByTask(event.target);
-      console.log(task);
+      const task = this.findDisplayableByTask(event.target);
       if (!isNullOrUndefined(task)) {
         task.isTranslated = false;
         task.isLoading = event.mode == LOADING_MODE.STARTED ? true : false;
