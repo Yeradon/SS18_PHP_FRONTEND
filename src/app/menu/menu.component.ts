@@ -20,7 +20,6 @@ export class MenuComponent implements OnInit {
     private router: Router
   ) {
     this.userService.loadUser().then((user) => {
-      console.log(user);
       this.user = user;
     });
   }

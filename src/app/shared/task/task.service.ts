@@ -88,6 +88,10 @@ export class TaskService {
       return null;
     } else {
       return new Promise<Task>((resolve, reject) => {
+        if(task.text == "" && !isNullOrUndefined(this.findEmptyTask(this.tasks))) {
+          reject("Es kann nur eine leere Aufgabe erstellt werden");
+          return;
+        }
         this.http
           .put<Task>(environment.BACKEND_URL + 'task', task)
           .pipe(map(TaskService.parseSingleResult))
@@ -105,6 +109,17 @@ export class TaskService {
           );
       });
     }
+  }
+
+  private findEmptyTask(tasks: Task[]): Task {
+    let buffer = null
+    tasks.forEach(task => {
+      if(task.text.length <= 0) {
+        console.log("hello")
+        buffer =  task;
+      }
+    });
+    return buffer;
   }
 
   /**
