@@ -180,7 +180,7 @@ export class TaskService {
   private parseResult(tasks: Task[]): Task[] {
     tasks.forEach(task => {
       if (!isNullOrUndefined(task.deadline) && !(task.deadline instanceof Date)) {
-        task.deadline = new Date(task.deadline);
+        task.deadline = new Date((new Date(task.deadline).getTime() + (new Date().getTimezoneOffset()*60000*(-1))));
       }
     });
     console.log(tasks);
