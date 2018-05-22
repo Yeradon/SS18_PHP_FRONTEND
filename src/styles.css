@@ -113,6 +113,9 @@ input[type="submit"]:hover {
 .blue {  /* blaue Schrift */
   color: #2E4172 !important;
 }
+.green { /* green color */
+  color: mediumspringgreen !important;
+}
 
 .clickable { /* ändert den Mauszeiger */
   padding: 10px;
