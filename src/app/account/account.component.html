@@ -21,7 +21,7 @@
   <label>Konto löschen</label>
   <div class="deleteAccount" [class.no-display]="!showDeleteAccount">
     <span>Bist du sicher, dass du dein Konto löschen möchtest? Alle Aufgaben und alle Benutzerinformationen werden verworfen.</span>
-    <input class="deleteBtn" type="button" value="Ja, mein Konto unwiderruflich löschen" />
+    <input class="deleteBtn" type="button" value="Ja, mein Konto unwiderruflich löschen" (click)="removeAccount()"/>
   </div>
   <input type="button" value="{{textDeleteAccount}}" (click)="toggleDeleteAccount()" />
 </section>
