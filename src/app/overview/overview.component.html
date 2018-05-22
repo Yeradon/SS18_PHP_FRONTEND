@@ -91,6 +91,34 @@
       <img class="clickable de-schedule" [class.disabled]="t.isLoading" src="assets/img/ic_restore_white_48px.svg" height="30px" (click)="descheduleTask(t)" />
     </div>
   </div>
+  <!-- DARSTELLUNG DER LISTE done -->
+  <div class="task-label" *ngIf="(tasks | taskSchedule:4).length">
+    <img src="assets/img/todo-logo.svg" height="20px" />
+    <label class="">ERLEDIGT</label>
+  </div>
+  <div class="translateable" *ngFor="let t of (tasks | taskSchedule:4)">
+    <div class="translateable-info" [class.translated]="t.isTranslated">
+      <span class="task-checkbox" *ngIf="!t.isLoading">
+        <input type="checkbox" [(ngModel)]="t.done" (change)="updateTask(t)" />
+        <img class="checkbox checked" src="assets/img/ic_check_box_white_24px.svg" height="30px"/>
+        <img class="checkbox unchecked" src="assets/img/ic_check_box_outline_blank_white_24px.svg" height="30px"/>
+      </span>
+      <div class="loading" *ngIf="t.isLoading">
+        <div class="loader_0"></div>
+        <div class="loader_1"></div>
+      </div>
+      <span class="task-title">
+        <input type="text" [(ngModel)]="t.text" (focusout)="updateTask(t)" />
+      </span>
+      <span class="task-scheduling green">Erledigt</span>
+      <img class="clickable options" src="assets/img/ic_more_vert_white_48px.svg" height="30px" (click)="t.toggleTranslation()"/>
+    </div>
+    <div class="translateable-options">
+      <img class="clickable delete" [class.disabled]="t.isLoading" src="assets/img/ic_delete_forever_white_48px.svg" height="30px" (click)="removeTask(t)" />
+      <img class="clickable schedule" [class.disabled]="t.isLoading" src="assets/img/ic_schedule_white_48px.svg" height="30px" (click)="scheduleTask(t)" />
+      <img class="clickable de-schedule" [class.disabled]="t.isLoading" src="assets/img/ic_restore_white_48px.svg" height="30px" (click)="descheduleTask(t)" />
+    </div>
+  </div>
   <div class="task-label no-border" *ngIf="!tasks.length">
     Alles erledigt? Du hast aktuell keine Aufgaben.
   </div>

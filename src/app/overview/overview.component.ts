@@ -79,6 +79,7 @@ export class OverviewComponent implements AfterViewInit {
             task_d.text = _task.text;
             task_d.deadline = _task.deadline;
             task_d.done = _task.done;
+            task_d.isTranslated = false;
             break;
         }
       }

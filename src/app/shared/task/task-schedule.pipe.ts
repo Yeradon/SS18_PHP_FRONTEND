@@ -6,14 +6,18 @@ import { isNullOrUndefined } from 'util';
 export enum SCHEDULE_STATUS {
   URGENT = 1,
   SCHEDULED,
-  UNSCHEDULED
+  UNSCHEDULED,
+  DONE
 }
 
 @Pipe({ name: 'taskSchedule', pure: false })
 export class TaskSchedulePipe implements PipeTransform {
   transform(allTasks: TaskDisplayable[], type: SCHEDULE_STATUS) {
     return allTasks.filter(task => {
-      if (
+      if(task.done) {
+        return type == SCHEDULE_STATUS.DONE;
+      }
+      else if (
         isNullOrUndefined(task.deadline) &&
         type == SCHEDULE_STATUS.UNSCHEDULED
       ) {
