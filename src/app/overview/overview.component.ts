@@ -74,13 +74,12 @@ export class OverviewComponent implements AfterViewInit {
             }
             break;
           case CHANGE_MODE.CHANGED:
-            console.log(event.newVal);
-            console.log(event.oldVal);
             let _task = event.newVal;
             let task_d = this.findDisplayableByTask(event.oldVal)
             task_d.text = _task.text;
             task_d.deadline = _task.deadline;
             task_d.done = _task.done;
+            task_d.isTranslated = false;
             break;
         }
       }
