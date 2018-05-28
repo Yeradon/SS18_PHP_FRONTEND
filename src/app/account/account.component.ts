@@ -42,6 +42,16 @@ export class AccountComponent implements OnInit {
       : TEXT_DELETE_ACCOUNT;
   }
 
+  updateAccount() {
+
+    console.log('account.component: updating: '+this.user);
+    this.userService.updateUser(this.user).then( user => {
+        console.log('account.component: success!');
+    }, (err) => {
+      this.messageService.add("Fehler beim Löschen des Benutzeraccounts: "+ err);
+    });
+  }
+
   removeAccount() {
     this.userService.loadUser().then(user => {
       this.userService.deleteUser(user).then( user => {

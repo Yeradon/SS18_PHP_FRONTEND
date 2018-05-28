@@ -1,5 +1,7 @@
 <section>
   <h1>Mein Account</h1>
+  <label>Benutzername</label>
+  <input type="text" [(ngModel)]="user.username" disabled />
   <label>Persönliche Informationen</label>
   <input type="text" [(ngModel)]="user.name" required />
   <input type="text" [(ngModel)]="user.surname" required />
@@ -22,5 +24,5 @@
   <input type="button" value="{{textDeleteAccount}}" (click)="toggleDeleteAccount()" />
 </section>
 <section>
-  <input type="submit" value="Änderungen speichern" />
+  <input type="submit" value="Änderungen speichern" (click)="updateAccount()" />
 </section>

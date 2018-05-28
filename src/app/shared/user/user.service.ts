@@ -48,6 +48,16 @@ export class UserService {
     });
   }
 
+  public async updateUser(user: User) {
+    console.log('user.service: updating: '+user);
+    this.http.post<User>(environment.BACKEND_URL + 'user/' + user.username, user).subscribe(() => {
+      console.log('user.service: success!');
+    }, (err) => {
+      console.log('user.service: error!');
+      this.messageService.add("Fehler beim Aktualisieren von " + user.username + ": " + err.message ? err.message : err);
+    })
+  }
+
   public async deleteUser(user: User) {
     this.http.delete(environment.BACKEND_URL + "user/" + user.username).subscribe(() => {
       this.users.splice(this.users.indexOf(user), 1);
