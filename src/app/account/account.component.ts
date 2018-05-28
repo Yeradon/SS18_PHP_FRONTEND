@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from '../shared/user/user';
 import { UserService } from '../shared/user/user.service';
+import { AuthenticationService } from '../shared/authentication/authentication.service';
+import { MessageService } from '../shared/message/message.service';
 
 const TEXT_CHANGE_PASSWD: string = 'Passwort ändern';
 const TEXT_DELETE_ACCOUNT: string = 'Konto löschen';
@@ -18,7 +20,7 @@ export class AccountComponent implements OnInit {
   public textChangePassword: string = TEXT_CHANGE_PASSWD;
   public textDeleteAccount: string = TEXT_DELETE_ACCOUNT;
 
-  constructor(private userService: UserService) {}
+  constructor(private userService: UserService, private authService: AuthenticationService, private messageService: MessageService) {}
 
   ngOnInit() {
     this.userService.loadUser().then((user) => {
@@ -38,5 +40,25 @@ export class AccountComponent implements OnInit {
     this.textDeleteAccount = this.showDeleteAccount
       ? TEXT_CANCEL
       : TEXT_DELETE_ACCOUNT;
+  }
+
+  updateAccount() {
+
+    console.log('account.component: updating: '+this.user);
+    this.userService.updateUser(this.user).then( user => {
+        console.log('account.component: success!');
+    }, (err) => {
+      this.messageService.add("Fehler beim Löschen des Benutzeraccounts: "+ err);
+    });
+  }
+
+  removeAccount() {
+    this.userService.loadUser().then(user => {
+      this.userService.deleteUser(user).then( user => {
+          this.authService.logout();
+      }, (err) => {
+        this.messageService.add("Fehler beim Löschen des Benutzeraccounts: "+ err);
+      })
+    });
   }
 }

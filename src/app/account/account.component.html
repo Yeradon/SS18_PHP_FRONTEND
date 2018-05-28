@@ -1,12 +1,10 @@
 <section>
   <h1>Mein Account</h1>
+  <label>Benutzername</label>
+  <input type="text" [(ngModel)]="user.username" disabled />
   <label>Persönliche Informationen</label>
   <input type="text" [(ngModel)]="user.name" required />
   <input type="text" [(ngModel)]="user.surname" required />
-</section>
-<section>
-  <label>Benutzername</label>
-  <input type="text" [(ngModel)]="user.username" required />
 </section>
 <section>
   <label>Passwort</label>
@@ -21,10 +19,10 @@
   <label>Konto löschen</label>
   <div class="deleteAccount" [class.no-display]="!showDeleteAccount">
     <span>Bist du sicher, dass du dein Konto löschen möchtest? Alle Aufgaben und alle Benutzerinformationen werden verworfen.</span>
-    <input class="deleteBtn" type="button" value="Ja, mein Konto unwiderruflich löschen" />
+    <input class="deleteBtn" type="button" value="Ja, mein Konto unwiderruflich löschen" (click)="removeAccount()"/>
   </div>
   <input type="button" value="{{textDeleteAccount}}" (click)="toggleDeleteAccount()" />
 </section>
 <section>
-  <input type="submit" value="Änderungen speichern" />
+  <input type="submit" value="Änderungen speichern" (click)="updateAccount()" />
 </section>
