@@ -45,7 +45,10 @@ export class AccountComponent implements OnInit {
   updateAccount() {
 
     console.log('account.component: updating: '+this.user);
-    this.userService.updateUser(this.user).then( user => {
+    this.userService.modifyUser(this.user, {
+      name: this.user.name,
+      surname:this.user.surname
+    }).then( user => {
         console.log('account.component: success!');
     }, (err) => {
       this.messageService.add("Fehler beim Löschen des Benutzeraccounts: "+ err);
