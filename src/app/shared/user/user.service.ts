@@ -29,7 +29,6 @@ export class UserService {
       } else {
         resolve(JSON.parse(user));
       }
-
     });
   }
 
@@ -53,6 +52,22 @@ export class UserService {
       this.users.splice(this.users.indexOf(user), 1);
     }, (err) => {
       this.messageService.add("Fehler beim Löschen von " + user.username + ": " + err.message ? err.message : err);
+    })
+  }
+
+  /**
+   * Attempts to modify a user ressource. The primary
+   * @param {User} user The user to be modified
+   * @param data Object with changed Data. Primary Key (username can't be changed). If the password should be changed the old and the new password have t
+   * @returns {Promise<User>}
+   */
+  public async modifyUser(user: User, data: any): Promise<User> {
+    return new Promise<User>((reject, resolve) => {
+      this.http.post<User>(environment.BACKEND_URL + "user/" + user.username, data).subscribe((user) => {
+        resolve(user);
+      }, (err) => {
+        reject(err);
+      });
     })
   }
 }
