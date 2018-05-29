@@ -48,11 +48,15 @@ export class UserService {
   }
 
   public async deleteUser(user: User) {
-    this.http.delete(environment.BACKEND_URL + "user/" + user.username).subscribe(() => {
-      this.users.splice(this.users.indexOf(user), 1);
-    }, (err) => {
-      this.messageService.add("Fehler beim Löschen von " + user.username + ": " + err.message ? err.message : err);
-    })
+    return new Promise<void>((resolve, reject) => {
+      this.http.delete(environment.BACKEND_URL + "user/" + user.username).subscribe(() => {
+        this.users.splice(this.users.indexOf(user), 1);
+        resolve();
+      }, (err) => {
+        this.messageService.add("Fehler beim Löschen von " + user.username + ": " + err.message ? err.message : err);
+        reject(err);
+      })
+    });
   }
 
   /**
@@ -62,7 +66,7 @@ export class UserService {
    * @returns {Promise<User>}
    */
   public async modifyUser(user: User, data: any): Promise<User> {
-    return new Promise<User>((reject, resolve) => {
+    return new Promise<User>((resolve, reject) => {
       this.http.post<User>(environment.BACKEND_URL + "user/" + user.username, data).subscribe((user) => {
         resolve(user);
       }, (err) => {
