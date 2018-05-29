@@ -9,9 +9,9 @@
 <section>
   <label>Passwort</label>
   <div class="changePasswd" [class.no-display]="!showChangePassword">
-    <input type="password" placeholder="Altes Passwort" />
-    <input type="password" placeholder="Neues Passwort" />
-    <input type="password" placeholder="Neues Passwort wiederholen" />
+    <input type="password" placeholder="Altes Passwort" [(ngModel)]="oldPasswd"/>
+    <input type="password" placeholder="Neues Passwort" [(ngModel)]="newPasswd"/>
+    <input type="password" placeholder="Neues Passwort wiederholen" [(ngModel)]="newPasswdRepeat"/>
   </div>
   <input type="button" value="{{textChangePassword}}" (click)="toggleChangePassword()" />
 </section>
@@ -26,3 +26,9 @@
 <section>
   <input type="submit" value="Änderungen speichern" (click)="updateAccount()" />
 </section>
+<div class="full-screen-loading" *ngIf="isLoading">
+  <div class="loading" *ngIf="isLoading">
+    <div class="loader_0"></div>
+    <div class="loader_1"></div>
+  </div>
+</div>
