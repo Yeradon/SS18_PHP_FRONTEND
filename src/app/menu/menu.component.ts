@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { AuthenticationService } from '../shared/authentication/authentication.service';
 import { UserService } from '../shared/user/user.service';
 import { User} from '../shared/user/user';
+import { CHANGE_MODE, ChangeEvent } from '../shared/task/task.service';
 
 @Component({
   selector: 'app-menu',
@@ -25,7 +26,27 @@ export class MenuComponent implements OnInit {
   }
 
   ngOnInit(
-  ) {}
+  ) {
+    this.userService.loadUsers();
+    this.userService.changeObservable.subscribe(
+      (event: ChangeEvent<User>) => {
+        let u = event.oldVal;
+        switch (event.mode) {
+        case CHANGE_MODE.ADDED:
+            // nothing do here *flies away*
+            break;
+          case CHANGE_MODE.DELETED:
+            // do nothing
+            break;
+          case CHANGE_MODE.CHANGED:
+              if (u.username == this.user.username) {
+                this.user = u;
+              }
+            break;
+        }
+      }
+    );
+  }
 
   logout() {
     this.authService.logout();

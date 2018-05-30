@@ -77,7 +77,9 @@ export class AccountComponent implements OnInit {
         localStorage.setItem('user', JSON.stringify(user));
         this.userService.loadUser();
         this.messageService.add('Änderungen wurden gespeichert.');
-        this.toggleChangePassword();
+        if (this.showChangePassword) {
+          this.toggleChangePassword();
+        }
     }, (err) => {
         this.isLoading = false;
 
