@@ -27,22 +27,15 @@ export class MenuComponent implements OnInit {
 
   ngOnInit(
   ) {
-    this.userService.loadUsers();
     this.userService.changeObservable.subscribe(
       (event: ChangeEvent<User>) => {
-        let u = event.oldVal;
+        const u = event.oldVal;
         switch (event.mode) {
-        case CHANGE_MODE.ADDED:
-            // nothing do here *flies away*
-            break;
-          case CHANGE_MODE.DELETED:
-            // do nothing
-            break;
           case CHANGE_MODE.CHANGED:
-              if (u.username == this.user.username) {
-                this.user = u;
+              if (u.username === this.user.username) {
+                this.user = event.newVal;
               }
-            break;
+              break;
         }
       }
     );

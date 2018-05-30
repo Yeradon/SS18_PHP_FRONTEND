@@ -34,7 +34,6 @@ export class AuthenticationService {
         .subscribe(
           res => {
             localStorage.setItem('user', JSON.stringify(res[0]));
-
             localStorage.setItem('auth', res[1].token);
             this._isLoggedIn = true;
             this.eventObservable.next(Authentication_EVENTS.LOGIN);

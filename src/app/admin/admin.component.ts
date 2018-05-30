@@ -6,6 +6,7 @@ import { User } from '../shared/user/user';
 import { UserDisplayable } from '../shared/user/user.displayable';
 import { AuthenticationService } from '../shared/authentication/authentication.service';
 import { MessageService } from '../shared/message/message.service';
+import {isNullOrUndefined} from "util";
 
 @Component({
   selector: 'app-admin',
@@ -31,15 +32,22 @@ export class AdminComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.userService.loadUsers();
+    if (isNullOrUndefined(this.userService.users)) {
+      this.userService.loadUsers();
+    } else {
+      this.userService.loadUsers().then((users) => {
+         this.users = this.generateDisplayableUsers(users);
+      });
+    }
+
     this.userService.changeObservable.subscribe(
       (event: ChangeEvent<User>) => {
         let u, index;
         switch (event.mode) {
-        case CHANGE_MODE.ADDED:
-            u = event.newVal;
-            this.users.push(new UserDisplayable(u.username, u.name, u.surname, u.role));
-            break;
+          case CHANGE_MODE.ADDED:
+              u = event.newVal;
+              this.users.push(new UserDisplayable(u.username, u.name, u.surname, u.role));
+              break;
           case CHANGE_MODE.DELETED:
               u = event.oldVal;
               this.users.splice(this.findUserInList(u, this.users), 1);
@@ -84,7 +92,6 @@ export class AdminComponent implements OnInit {
 
   private filterList(list: UserDisplayable[], filter: string): number {
     var hidden = 0;
-
     for (let u of list) {
       if (u.username.indexOf(filter) < 0) {
         u.setHidden(true);
@@ -98,12 +105,13 @@ export class AdminComponent implements OnInit {
   }
 
   private findUserInList(u: User, list: UserDisplayable[]): number {
+    let _index = null;
     list.forEach((user, index) => {
-      if (user.username == u.username) {
-        return index;
+      if (user.username === u.username) {
+        _index = index;
       }
     });
-    return null;
+    return _index;
   }
 
   private generateDisplayableUsers(users: User[]): UserDisplayable[] {
