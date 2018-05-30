@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { AdminPopupComponent } from '../admin-popup/admin-popup.component';
 import { UserService } from '../shared/user/user.service';
+import { CHANGE_MODE, ChangeEvent } from '../shared/task/task.service';
 import { User } from '../shared/user/user';
 import { UserDisplayable } from '../shared/user/user.displayable';
 import { AuthenticationService } from '../shared/authentication/authentication.service';
@@ -28,10 +29,27 @@ export class AdminComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.userService.loadUsers().then((users) => {
-      this.users = this.generateDisplayableUsers(users);
-    });
-
+    this.userService.loadUsers();
+    this.userService.changeObservable.subscribe(
+      (event: ChangeEvent<User>) => {
+        let u, index;
+        switch (event.mode) {
+        case CHANGE_MODE.ADDED:
+            u = event.newVal;
+            this.users.push(new UserDisplayable(u.username, u.name, u.surname, u.role));
+            break;
+          case CHANGE_MODE.DELETED:
+              u = event.oldVal;
+              this.users.splice(this.findUserInList(u, this.users), 1);
+            break;
+          case CHANGE_MODE.CHANGED:
+              u = event.oldVal;
+              index = this.findUserInList(u, this.users);
+              this.users[index] = this.generateDisplayableUser(event.newVal);
+            break;
+        }
+      }
+    );
     this.user = this.authService.getUser();
   }
 
@@ -66,13 +84,26 @@ export class AdminComponent implements OnInit {
     return hidden;
   }
 
+  private findUserInList(u: User, list: UserDisplayable[]): number {
+    list.forEach((user, index) => {
+      if (user.username == u.username) {
+        return index;
+      }
+    });
+    return null;
+  }
+
   private generateDisplayableUsers(users: User[]): UserDisplayable[] {
     var result: UserDisplayable[] = [];
 
     for (let u of users) {
-      result.push(new UserDisplayable(u.username, u.name, u.surname, u.role));
+      result.push(this.generateDisplayableUser(u));
     }
 
     return result;
+  }
+
+  private generateDisplayableUser(u: User): UserDisplayable {
+    return new UserDisplayable(u.username, u.name, u.surname, u.role);
   }
 }

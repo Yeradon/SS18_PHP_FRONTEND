@@ -13,7 +13,7 @@ import { Subject } from 'rxjs/Rx';
 })
 export class UserService {
 
-  users: User[];
+  users: User[] = [];
 
   changeObservable: Subject<ChangeEvent<User>> = new Subject<ChangeEvent<User>>();
   constructor( private messageService: MessageService, private authService: AuthenticationService, private http: HttpClient) {
@@ -38,7 +38,6 @@ export class UserService {
 
   public async loadUsers(): Promise<User[]> {
     return new Promise<User[]>((resolve, reject) => {
-      if(isNullOrUndefined(this.users)) {
         this.http.get<User[]>(environment.BACKEND_URL + "user").subscribe((users) => {
           this.users.forEach((user) => {
             this.changeObservable.next(new ChangeEvent<User>(CHANGE_MODE.DELETED, user, null));
@@ -51,9 +50,6 @@ export class UserService {
         }), (err) => {
           reject(err);
         }
-      } else {
-        return this.users;
-      }
     });
   }
 
