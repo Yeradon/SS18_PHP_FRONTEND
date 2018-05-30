@@ -3,6 +3,7 @@ import { User } from '../shared/user/user';
 import { UserService } from '../shared/user/user.service';
 import { AuthenticationService } from '../shared/authentication/authentication.service';
 import { MessageService } from '../shared/message/message.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 const TEXT_CHANGE_PASSWD: string = 'Passwort ändern';
 const TEXT_DELETE_ACCOUNT: string = 'Konto löschen';
@@ -19,9 +20,9 @@ export class AccountComponent implements OnInit {
   public showDeleteAccount: boolean = false;
   public textChangePassword: string = TEXT_CHANGE_PASSWD;
   public textDeleteAccount: string = TEXT_DELETE_ACCOUNT;
-  public oldPasswd: string;
-  public newPasswd: string;
-  public newPasswdRepeat: string;
+  public oldPasswd: string = '';
+  public newPasswd: string = '';
+  public newPasswdRepeat: string = '';
   public isLoading: boolean = false;
 
   constructor(private userService: UserService, private authService: AuthenticationService, private messageService: MessageService) {}
@@ -76,12 +77,24 @@ export class AccountComponent implements OnInit {
         localStorage.setItem('user', JSON.stringify(user));
         this.userService.loadUser();
         this.messageService.add('Änderungen wurden gespeichert.');
+        this.toggleChangePassword();
     }, (err) => {
         this.isLoading = false;
+
+        if (err instanceof HttpErrorResponse && err.status == 403) {
+          this.messageService.add('Das Passwort ist nicht korrekt. Bitte versuche es erneut.');
+        } else {
+          this.messageService.add('Es ist ein Fehler aufgetreten: ' + err.message);
+        }
+
         this.userService.loadUser().then((user) => {
           this.user = user;
         });
     });
+
+    this.oldPasswd = '';
+    this.newPasswd = '';
+    this.newPasswdRepeat = '';
   }
 
   removeAccount() {
