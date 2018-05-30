@@ -5,6 +5,7 @@ import { CHANGE_MODE, ChangeEvent } from '../shared/task/task.service';
 import { User } from '../shared/user/user';
 import { UserDisplayable } from '../shared/user/user.displayable';
 import { AuthenticationService } from '../shared/authentication/authentication.service';
+import { MessageService } from '../shared/message/message.service';
 
 @Component({
   selector: 'app-admin',
@@ -25,7 +26,8 @@ export class AdminComponent implements OnInit {
 
   constructor(
     private userService: UserService,
-    private authService: AuthenticationService
+    private authService: AuthenticationService,
+    private messageService: MessageService
   ) { }
 
   ngOnInit() {
@@ -66,6 +68,17 @@ export class AdminComponent implements OnInit {
     if (user.username != this.user.username) {
       this.user2BeDeleted = user;
       this.adminPopup.show();
+    }
+  }
+
+  public setUserRole(user: UserDisplayable, roleID: string) {
+    if (user.username != this.user.username) {
+      let data = { role: roleID };
+      this.userService.modifyUser(user, data).then( user => {
+
+      }, (err) => {
+        this.messageService.add('Beim Setzten der Rolle ist ein Fehler aufgetreten: '+err.message);
+      });
     }
   }
 
