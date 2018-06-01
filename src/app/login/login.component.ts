@@ -7,6 +7,9 @@ import { MessageService } from '../shared/message/message.service';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
+  /*
+   * Klasse zur Verwaltung der Komponente "Login"
+   */
 export class LoginComponent implements OnInit {
   user = '';
   password = '';
@@ -19,6 +22,9 @@ export class LoginComponent implements OnInit {
   regName = '';
   regSurname = '';
 
+    /*
+     * Initialisiert eine neue Komponente
+     */
   constructor(
     private authService: AuthenticationService,
     private messageService: MessageService
@@ -26,6 +32,9 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {}
 
+    /*
+     * Schickt einen Login-Request an den Server
+     */
   login() {
     this.isLoading = true;
     this.authService.login(this.user, this.password).then(() => {
@@ -35,15 +44,20 @@ export class LoginComponent implements OnInit {
     });
   }
 
+    /*
+     * Schickt einen Register-Request an den Server
+     */
   register() {
 
     if (this.regPasswd != this.regPasswdRepeat) {
+      // Passwörter stimmen nicht überein - Request wird nicht gesendet
       this.messageService.add('Das Passwort und die Wiederholung des Passworts stimmen nicht überein.');
       this.regPasswd = '';
       this.regPasswdRepeat = '';
       return;
     }
 
+    // Request senden
     this.isLoading = true;
     this.authService.register(this.regUser, this.regName, this.regSurname, this.regPasswd).then(() => {
       this.isLoading = false;
@@ -52,6 +66,12 @@ export class LoginComponent implements OnInit {
     });
   }
 
+    /*
+     * Zeigt ein bestimmtes Formular an.
+     * 0: Login
+     * 1: Registrieren
+     * 2: Passwort vergessen
+     */
   public show(formId: number): void {
     this.showForm = formId;
   }

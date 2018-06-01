@@ -25,6 +25,9 @@ export class UserService {
     });
   }
 
+    /*
+     * sends a request to load a single user
+     */
   public async loadUser(): Promise<User> {
     return new Promise<User>((resolve, reject) => {
       const user = localStorage.getItem('user');
@@ -41,6 +44,9 @@ export class UserService {
     });
   }
 
+    /*
+     * sends a request to load all users
+     */
   public async loadUsers(): Promise<User[]> {
     return new Promise<User[]>((resolve, reject) => {
         this.http.get<User[]>(environment.BACKEND_URL + "user").subscribe((users) => {
@@ -58,6 +64,9 @@ export class UserService {
     });
   }
 
+    /*
+     * deletes a user
+     */
   public async deleteUser(user: User) {
     return new Promise<void>((resolve, reject) => {
       this.http.delete(environment.BACKEND_URL + "user/" + user.username).subscribe(() => {

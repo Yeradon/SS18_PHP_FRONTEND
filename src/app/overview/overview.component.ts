@@ -18,20 +18,29 @@ import { SCHEDULE_STATUS } from '../shared/task/task-schedule.pipe';
   templateUrl: './overview.component.html',
   styleUrls: ['./overview.component.css'],
 })
+/*
+ * Klasse zur Verwaltung der Komponente "Uebersicht"
+ */
 export class OverviewComponent implements AfterViewInit {
+
   isLoading = false;
   tasks: TaskDisplayable[] = [];
-
   task2BeScheduled: TaskDisplayable;
 
   @ViewChild(SchedulePopupComponent)
   private schedulePopup: SchedulePopupComponent;
 
+  /*
+   * Initialisiert eine neue Komponente
+   */
   constructor(
     private taskService: TaskService,
     private messageService: MessageService
   ) {}
 
+  /*
+   * Erstellt lokal eine neue Aufgabe.
+   */
   private insertNewTask = (task: Task) => {
     var task_d: TaskDisplayable = new TaskDisplayable(
       task.id,
@@ -44,10 +53,9 @@ export class OverviewComponent implements AfterViewInit {
   };
 
   /*
-    * Lädt Aufgaben und teilt sie auf drei Listen auf:
-    * - tasks_urgent: dringende Aufgaben
-    * - tasks_scheduled: eingeplante Aufgaben
-    * - tasks_unscheduled: nicht eingeplante und bereits erledigte Aufgaben
+    * Lädt Aufgaben vom Server und fuegt sie der Uebersicht hinzu.
+    * Beginnt mit der Ueberwachung der Aufgaben-Liste, um auf Aenderungen
+    * zu reagieren.
     */
   ngAfterViewInit() {
     this.isLoading = true;
@@ -94,6 +102,9 @@ export class OverviewComponent implements AfterViewInit {
     });
   }
 
+  /*
+   * Durchsucht die aktuell angezeigten Aufgaben
+   */
   private findDisplayableByTask(task: Task): TaskDisplayable {
     let buffer: TaskDisplayable = null;
     const cmpFunction = (_task: TaskDisplayable) => {
@@ -118,8 +129,8 @@ export class OverviewComponent implements AfterViewInit {
   }
 
   /*
-   * Entfernt die Terminierung einer Aufgabe und fügt sie anschließend der Liste
-   * tasks_unscheduled hinzu
+   * Entfernt die Terminierung einer Aufgabe und aktualisiert sie auf
+   * dem Server.
    */
   public async descheduleTask(task: TaskDisplayable) {
     if (!task.isLoading) {
@@ -133,7 +144,8 @@ export class OverviewComponent implements AfterViewInit {
   }
 
   /*
-   * Entfernt eine Aufgabe.
+   * Entfernt eine Aufgabe auf dem Server (und durch die Überwachung der
+   * Aufgaben-Liste indirekt auch lokal).
    */
   public async removeTask(task: TaskDisplayable) {
 
@@ -147,6 +159,9 @@ export class OverviewComponent implements AfterViewInit {
 
   }
 
+  /*
+   * Aktualisiert eine Aufgabe lokal und auf dem Server.
+   */
   public async updateTask(task: TaskDisplayable) {
 
     if (!task.isLoading) {
@@ -159,9 +174,13 @@ export class OverviewComponent implements AfterViewInit {
 
   }
 
+  /*
+   * Entfernt eine Aufgabe lokal.
+   */
   private removeOldTask(task: TaskDisplayable) {
     this.removeElementFromArray(task, this.tasks);
   }
+
   /*
    * Entfernt ein Element aus einem Array. Gibt true zurück, wenn das Element
    * im Array vorhanden war und entfernt wurde.

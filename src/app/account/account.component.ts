@@ -14,6 +14,9 @@ const TEXT_CANCEL: string = 'Abbrechen';
   templateUrl: './account.component.html',
   styleUrls: ['./account.component.css']
 })
+/*
+ * Klasse zur Verwaltung der Komponente "Account"
+ */
 export class AccountComponent implements OnInit {
   public user: User;
   public showChangePassword: boolean = false;
@@ -25,14 +28,23 @@ export class AccountComponent implements OnInit {
   public newPasswdRepeat: string = '';
   public isLoading: boolean = false;
 
+  /*
+   * Initialisiert eine neue Komponente.
+   */
   constructor(private userService: UserService, private authService: AuthenticationService, private messageService: MessageService) {}
 
+  /*
+   * Laedt das eigene User-Objekt
+   */
   ngOnInit() {
     this.userService.loadUser().then((user) => {
       this.user = user;
     });
   }
 
+  /*
+   * Zeigt oder versteckt den Bereich zum Aendern des Passworts.
+   */
   toggleChangePassword(): void {
     this.showChangePassword = !this.showChangePassword;
     this.textChangePassword = this.showChangePassword
@@ -40,6 +52,9 @@ export class AccountComponent implements OnInit {
       : TEXT_CHANGE_PASSWD;
   }
 
+  /*
+   * Zeigt oder verbirgt den Bereich zum Loeschen des Accounts.
+   */
   toggleDeleteAccount(): void {
     this.showDeleteAccount = !this.showDeleteAccount;
     this.textDeleteAccount = this.showDeleteAccount
@@ -47,16 +62,22 @@ export class AccountComponent implements OnInit {
       : TEXT_DELETE_ACCOUNT;
   }
 
+  /*
+   * Aktualisiert den Account auf dem Server.
+   */
   updateAccount() {
 
     console.log('updateAccount: START');
     let data = {};
 
     if (this.showChangePassword) {
+      // Aenderung des Passworts angefordert
       if (this.newPasswd != this.newPasswdRepeat) {
+        // Aenderung des Passworts abgelehnt
         this.messageService.add('Das neue Passwort und die Wiederholung des neuen Passworts stimmen nicht überein.');
         return;
       } else {
+        // Aenderung des Passworts Initialisieren
         data = {
           name: this.user.name,
           surname: this.user.surname,
@@ -65,12 +86,15 @@ export class AccountComponent implements OnInit {
         }
       }
     } else {
+      // Aenderung des Passworts nicht angefordert
+      // Einfache Aenderung der User-Informationen Initialisieren
       data = {
         name: this.user.name,
         surname: this.user.surname
       }
     }
 
+    // Request ausfuehren
     this.isLoading = true;
     this.userService.modifyUser(this.user, data).then( user => {
         this.isLoading = false;
@@ -99,6 +123,9 @@ export class AccountComponent implements OnInit {
     this.newPasswdRepeat = '';
   }
 
+  /*
+   * Loescht einen Account auf dem Server und meldet den User anschließend ab.
+   */
   removeAccount() {
     this.userService.loadUser().then(user => {
       this.userService.deleteUser(user).then( user => {

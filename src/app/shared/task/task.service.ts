@@ -83,6 +83,9 @@ export class TaskService {
     });
   }
 
+    /*
+     * creates a new, empty task
+     */
   public async createTask(task: Task): Promise<Task> {
     if (!isNullOrUndefined(task.id)) {
       return null;

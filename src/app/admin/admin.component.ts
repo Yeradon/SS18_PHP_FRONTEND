@@ -13,6 +13,10 @@ import {isNullOrUndefined} from "util";
   templateUrl: './admin.component.html',
   styleUrls: ['./admin.component.css']
 })
+
+  /*
+   * Klasse zur Verwaltung der Komponente "Admin"
+   */
 export class AdminComponent implements OnInit {
   public hiddenUsers: number;
   public hiddenAdmins: number;
@@ -25,12 +29,19 @@ export class AdminComponent implements OnInit {
   @ViewChild(AdminPopupComponent)
   private adminPopup: AdminPopupComponent;
 
+    /*
+     * Initialisiert eine neue Komponente
+     */
   constructor(
     private userService: UserService,
     private authService: AuthenticationService,
     private messageService: MessageService
   ) { }
 
+    /*
+     * Laedt alle User-Objekte und beginnt mit der Ueberwachung, um auf
+     * Aenderungen zu reagieren
+     */
   ngOnInit() {
     if (isNullOrUndefined(this.userService.users)) {
       this.userService.loadUsers();
@@ -63,15 +74,24 @@ export class AdminComponent implements OnInit {
     this.user = this.authService.getUser();
   }
 
+    /*
+     * Filtert die Benutzerliste
+     */
   public filter_onInput(): void {
     this.hiddenUsers = this.filterList(this.users, this.filter);
   }
 
+    /*
+     * Setzt die Filterung der Benutzerliste zurueck
+     */
   public filter_onReset(): void {
     this.filter = '';
     this.hiddenUsers = this.filterList(this.users, this.filter);
   }
 
+    /*
+     * Loescht einen User auf dem Server.
+     */
   public deleteUser(user: UserDisplayable) {
     if (user.username != this.user.username) {
       this.user2BeDeleted = user;
@@ -79,6 +99,9 @@ export class AdminComponent implements OnInit {
     }
   }
 
+    /*
+     * Aendert die Rolle eines Users auf dem Server
+     */
   public setUserRole(user: UserDisplayable, roleID: string) {
     if (user.username != this.user.username) {
       let data = { role: roleID };
@@ -90,6 +113,9 @@ export class AdminComponent implements OnInit {
     }
   }
 
+    /*
+     * Fuehrt die eigentliche Filterung der Liste aus
+     */
   private filterList(list: UserDisplayable[], filter: string): number {
     var hidden = 0;
     for (let u of list) {
@@ -104,6 +130,9 @@ export class AdminComponent implements OnInit {
     return hidden;
   }
 
+    /*
+     * Durchsucht eine Liste nach einen User
+     */
   private findUserInList(u: User, list: UserDisplayable[]): number {
     let _index = null;
     list.forEach((user, index) => {
@@ -114,6 +143,9 @@ export class AdminComponent implements OnInit {
     return _index;
   }
 
+    /*
+     * Erschafft anzeigbare User
+     */
   private generateDisplayableUsers(users: User[]): UserDisplayable[] {
     var result: UserDisplayable[] = [];
 
@@ -124,6 +156,9 @@ export class AdminComponent implements OnInit {
     return result;
   }
 
+    /*
+     * Erschafft einen anzeigbaren User
+     */
   private generateDisplayableUser(u: User): UserDisplayable {
     return new UserDisplayable(u.username, u.name, u.surname, u.role);
   }

@@ -10,11 +10,17 @@ import { CHANGE_MODE, ChangeEvent } from '../shared/task/task.service';
   templateUrl: './menu.component.html',
   styleUrls: ['./menu.component.css']
 })
+  /*
+   * Klasse zur Verwaltung der Komponente "Menu"
+   */
 export class MenuComponent implements OnInit {
 
   public showNav = false;
   public user: User;
 
+    /*
+     * Initialisiert eine neue Komponente
+     */
   constructor(
     private authService: AuthenticationService,
     private userService: UserService,
@@ -25,6 +31,10 @@ export class MenuComponent implements OnInit {
     });
   }
 
+    /*
+     * Beginnt mit der Ueberwachung des eigenen User-Objekts, um auf
+     * Aenderungen zu reagieren
+     */
   ngOnInit(
   ) {
     this.userService.changeObservable.subscribe(
@@ -41,11 +51,17 @@ export class MenuComponent implements OnInit {
     );
   }
 
+    /*
+     * Beende die Sitzung und meldet den User ab.
+     */
   logout() {
     this.authService.logout();
     this.showNav = false;
   }
 
+    /*
+     * Navigiert auf eine bestimmte Seite und schliesst das Menu
+     */
   public navigateTo(x: string): void {
     this.router.navigate([x]);
     this.showNav = false;
