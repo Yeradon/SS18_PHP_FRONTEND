@@ -116,6 +116,7 @@ export class TaskService {
 
   private findEmptyTask(tasks: Task[]): Task {
     let buffer = null
+    console.log(this.tasks);
     tasks.forEach(task => {
       if(task.text.length <= 0) {
         console.log("hello")
@@ -138,7 +139,9 @@ export class TaskService {
         .pipe(map(TaskService.parseSingleResult))
         .subscribe((newTask: Task) => {
         const index = this.tasks.indexOf(task);
+        console.log(this.tasks);
         this.tasks[index] = newTask;
+        console.log(this.tasks);
         this.changeObservable.next(new ChangeEvent<Task>(CHANGE_MODE.CHANGED, task, newTask));
         resolve(newTask);
       }, (err) => {
