@@ -4,18 +4,18 @@ describe('ToDo Login Tests', () => {
   // e2e test case with karma, protractor and jasmine
   it('should display the login form', () => {
     browser.get('/');
-    expect(element(by.name('user'))).toBeDefined;
-    expect(element(by.name('password'))).toBeDefined;
-    expect(element(by.name('submit'))).toBeDefined;
+    expect(element(by.name('user'))).toBeDefined();
+    expect(element(by.name('password'))).toBeDefined();
+    expect(element(by.name('submit'))).toBeDefined();
   });
 
   it('should display empty login form', () => {
     browser.get('/');
-    expect(element(by.name('user')).getAttribute('value')).toBeFalsy;
+    expect(element(by.name('user')).getAttribute('value')).toBeFalsy();
     expect(element(by.name('user')).getAttribute('placeholder')).toBe(
       'Benutzername'
     );
-    expect(element(by.name('password')).getAttribute('value')).toBeFalsy;
+    expect(element(by.name('password')).getAttribute('value')).toBeFalsy();
     expect(element(by.name('password')).getAttribute('placeholder')).toBe(
       'Passwort'
     );
